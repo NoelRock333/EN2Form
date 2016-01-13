@@ -1,0 +1,267 @@
+{% extends '../layout.html' %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <img src="" id="logo" alt="" />
+      </div>
+      <div class="col-sm-7">
+        <table width="100%">
+          <tr>
+            <td><label for="">Fecha </label></td>
+            <td>
+              <div class="input-group date" data-provide="datepicker">
+                  <input type="text" class="form-control" name="fecha_expediente">
+                  <div class="input-group-addon">
+                      <span class="glyphicon glyphicon-th"></span>
+                  </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="">Recomendado por </label></td>
+            <td>
+              <input type="text" class="form-control" name="nombre_colega">
+              <input type="hidden" name="id_colega" value="">
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3>FICHA DE ENDODONCIA</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="">Paciente</label>
+        <input type="text" class="form-control" name="nombre_paciente" />
+      </div>
+      <div class="col-sm-2">
+        <label for="">Sexo</label>
+        <select class="form-control" name="sexo" />
+          <option value=""></option>
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+      </div>
+      <div class="col-sm-1">
+        <label for="">Edad</label>
+        <input type="text" class="form-control" name="edad" />
+      </div>
+      <div class="col-sm-3">
+        <label for="">Teléfono</label>
+        <input type="text" class="form-control" name="telefono" value="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <label for="">Dirección</label>
+        <input type="text" class="form-control" name="direccion">
+      </div>
+      <div class="col-sm-4">
+        <label for="">Colonia</label>
+        <input type="text" class="form-control" name="colonia">
+      </div>
+      <div class="col-sm-4">
+        <label for="">Ciudad</label>
+        <input type="text" class="form-control" name="ciudad">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <label for="">Ocupación</label>
+        <input type="text" class="form-control" name="ocupacion">
+      </div>
+      <div class="col-sm-4">
+        <label for="">Dientes</label>
+        <input type="text" class="form-control" name="dientes">
+      </div>
+      <div class="col-sm-4">
+        <label for="">Ha sido anesteciado antes?</label>
+        <select class="form-control" name="asistencia">
+          <option value=""></option>
+          <option value="SI">SI</option>
+          <option value="NO">NO</option>
+        </select>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>Alergias</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <input type="checkbox" name="alergia" value="1"> Anestesia
+        <input type="checkbox" name="alergia" value="2"> Penicilina
+        <input type="checkbox" name="alergia" value="3"> Latex
+        <input type="checkbox" name="alergia" value="4"> Yodo
+        <input type="checkbox" name="alergia" value="5"> Cloro
+        Otro: <input type="text" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="">¿Presenta algún tipo de enfermedad y/o dolor en este momento?:</label>
+        <input type="text" class="form-control" name="enfermedad" value="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="">¿Que medicamentos ha tomado en las últimas 2 semanas?:</label>
+        <input type="text" class="form-control" name="medicamentos" value="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Aparatos y sistemas</h3>
+        <i>(Señale el tipo de enfermedad, que presenta de las siguientes, aún cuendo estas no sean recientes)</i>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="problema">
+          <label for="">Problemas digestivos</label>
+          <div class="opciones">
+            <input type="checkbox" name="problema[1]" value="1">
+            <i>?</i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas Respiratorios</label>
+          <div class="opciones">
+            <input type="checkbox" name="problema[2]" value="2">
+            <i>?</i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas del Corazón</label>
+          <div class="opciones">
+            <input type="checkbox" name="problema[3]" value="3">
+            <i>?</i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas Hermáticos</label>
+          <div class="opciones">
+            <input type="checkbox" name="problema[4]" value="4">
+            <i>?</i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas Genilu-Urinario</label>
+          <div class="opciones">
+            <input type="checkbox" name="problema[5]" value="5">
+            <i>?</i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas Endorcinos</label>
+          <div class="opciones">
+            <input type="checkbox" name="problema[6]" value="6">
+            <i>?</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Antecedentes del tiente a tratar (interrogatorio)</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[1]" value="1"> Caries
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[2]" value="2"> Amalgama
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[3]" value="3"> Traumatismo
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[4]" value="4"> Corona
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[5]" value="5"> Resina
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[6]" value="6"> Curación
+      </div>
+
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[7]" value="7"> Incrustación
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[8]" value="8"> Provicional
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[9]" value="9"> Ninguna
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendente[10]" value="10"> Retratamiento
+      </div>
+      <div class="col-sm-4">
+        <input type="checkbox" name="antecendente[11]" value="11"> Otro
+        <input type="text" class="form-control" name="antecedente_otro" value="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Examen clínico (síntomas)</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[1]" value="1"> Frio
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[2]" value="2"> Calor
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[3]" value="3"> Masticación
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[4]" value="4"> Persistente
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[5]" value="5"> Fugaz
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[6]" value="6"> Nocturno
+      </div>
+
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[7]" value="7"> Localización
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[8]" value="8"> Irradiado
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[9]" value="9"> Provocado
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[10]" value="10"> Espontaneo
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[11]" value="11"> Ninguno
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico[12]" value="12"> Punsatil
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    $(document).on("ready", function(){
+
+    });
+  </script>
+{% endblock %}
