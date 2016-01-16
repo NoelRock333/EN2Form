@@ -5,6 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+var massive = require("massive");
+var connectionString = "postgres://postgres:123@localhost/EN2";
+var massiveInstance = massive.connectSync({connectionString : connectionString}) ;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -21,6 +24,7 @@ app.set('view engine', 'html');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.set('view cache', false);
 swig.setDefaults({ cache: false });
+app.set('db', massiveInstance);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
