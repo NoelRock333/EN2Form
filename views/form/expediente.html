@@ -1,5 +1,6 @@
 {% extends '../layout.html' %}
 {% block content %}
+<form action="/save" method="POST">
   <div class="container">
     <div class="row">
       <div class="col-sm-5">
@@ -26,7 +27,7 @@
             </td>
           </tr>
         </table>
-      </div>
+      </div> <!-- Primera seccion-->
     </div>
     <hr>
     <div class="row">
@@ -87,7 +88,7 @@
           <option value="NO">NO</option>
         </select>
       </div>
-    </div>
+    </div><!--Ficha endodoncia-->
     <hr>
     <div class="row">
       <div class="col-sm-12">
@@ -115,7 +116,7 @@
         <label for="">¿Que medicamentos ha tomado en las últimas 2 semanas?:</label>
         <input type="text" class="form-control" name="medicamentos" value="">
       </div>
-    </div>
+    </div> <!--Alergias-->
     <div class="row">
       <div class="col-sm-12">
         <h3>Aparatos y sistemas</h3>
@@ -168,7 +169,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> <!--Aparatos y sitemas-->
     <div class="row">
       <div class="col-sm-12">
         <h3>Antecedentes del tiente a tratar (interrogatorio)</h3>
@@ -210,7 +211,7 @@
         <input type="checkbox" name="antecendente[11]" value="11"> Otro
         <input type="text" class="form-control" name="antecedente_otro" value="">
       </div>
-    </div>
+    </div> <!--Antecedentes del tiente a tratar (interrogatorio)-->
     <div class="row">
       <div class="col-sm-12">
         <h3>Examen clínico (síntomas)</h3>
@@ -254,8 +255,335 @@
       <div class="col-sm-2">
         <input type="checkbox" name="examen_clinico[12]" value="12"> Punsatil
       </div>
+    </div> <!--Examen clínico (síntomas)-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Pulpa</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="pulpa[1]" value="1"> Integra
+      </div>
+        <div class="col-sm-2">
+        <input type="checkbox" name="pulpa[2]" value="2"> Expuesta
+      </div>
+        <div class="col-sm-2">
+        <input type="checkbox" name="pulpa[3]" value="3"> Necrotica
+      </div>
+        <div class="col-sm-2">
+        <input type="checkbox" name="pulpa[4]" value="4"> Sin pulpa
+      </div>
+        <div class="col-sm-2">
+        <input type="checkbox" name="pulpa[5]" value="5"> Obturado
+      </div>
+    </div> <!--Pulpa-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Palpación periapical</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical[1]" value="1"> Normal
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical[2]" value="2"> Fistula
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical[3]" value="3"> Tumefación difusa
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical[4]" value="4"> Tumefacción localizada
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical[5]" value="5"> Absceso
+      </div>
+    </div> <!--Palpacion-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Conducto radicular RX</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular[1]" value="1"> Normal
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular[2]" value="2"> Amplio
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular[3]" value="3"> Estrecho
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular[4]" value="4"> Calcificado
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular[5]" value="5"> Preparado
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular[6]" value="6"> Obturado
+      </div>
+    </div><!--conducto radicular-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Zona periapical RX</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="zona_periapical[1]" value="1"> Normal
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="zona_periapical[2]" value="2"> Ensanchado
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="zona_periapical[3]" value="3"> Lesión apical circunscrita
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="zona_periapical[4]" value="4"> Lesión apical difusa
+      </div>
+    </div><!--Zona periapical RX-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Diagnóstico pulpal</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_pulpal[1]" value="1"> Pulpitis reversible
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_pulpal[2]" value="2"> Pulpitis irreversible 
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_pulpal[3]" value="3"> Necrosis pulpar
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_pulpal[4]" value="4"> Sin pulpa
+      </div>
+    </div><!--Diagnóstico Pulpal-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Diagnóstico periapical de presunción</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion[1]" value="1"> PAA
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion[2]" value="2"> PACro
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion[3]" value="3"> PACro.SUP
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion[4]" value="4"> Abs. Ag
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion[5]" value="5"> Abs. Fénix
+      </div>
+    </div><!--Diagnóstico periapical de presunción-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Interección indicada</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada[1]" value="1"> Necropulpectomia
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada[2]" value="2"> Biopulpectomia
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada[3]" value="3"> Repetición
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada[4]" value="4"> TX. Quirurgico
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada[5]" value="5"> Extracción
+      </div>
+    </div><!--Interección indicada-->
+    <hr>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3>CONTROL DEL TRATAMIENTO</h3>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-striped table-condensed">
+            <thead>
+              <tr>
+                <th>Conducto</th>
+                <th>Conductometría real</th>
+                <th>Relación</th>
+                <th>Instrumento final apical</th>
+                <th>Se desopturo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>único</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Mesio vestibular</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Disto vestibular</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Distal</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Mesio lingual</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Palatino</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vestibular</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Mv2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Disto lingual</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Mesial</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+        <label>Pronóstico</label>
+        </div>
+        <div class="col-sm-4">
+          <input type="checkbox" name="pronostico[1]" value="1"> Favorable
+        </div>
+        <div class="col-sm-4">
+          <input type="checkbox" name="pronostico[2]" value="2"> Reservado
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-4">
+          <p style="text-align:justify;">Si me comprometo a restaurar mi tratamiento de endodoncia antes de 20 días. El doctor me explicó claramente que puede regresar el dolor si se contamina ya que colocó una <b>curación temporal</b> (algodón y cavit) que no durará mucho y si esto sucede hay que repetir la endoconcia pagando de nuevo por el tratamiento.</p>  
+        </div>
+        <div class="col-sm-4">
+          
+        </div>
+        <div class="col-sm-4">
+          <p style="text-align:justify;">No me comprometo a restaurar mi tratamiento anntes de 20 días. El doctor me explicó claramente que colocó una <b>curación temporal</b> (algodón y cavit) y que ésta se puede caer, contaminándose mi tratamiento. Asumo el riesgo al no restaurarlo oportunamente.</p>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>NOTAS DE EVOLUCIÓN</h3>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Trabajo clínico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="xs-12">
+        <button type="submit" class="btn btn-default btn-lg pull-right">Guardar</button>
+      </div>
     </div>
   </div>
+</form>
 {% endblock %}
 
 {% block scripts %}

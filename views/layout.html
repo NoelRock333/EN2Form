@@ -5,12 +5,15 @@
     <title>{% block title %}<%= title %>{% endblock %}</title>
     <link rel="stylesheet" href="/stylesheets/style.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-datepicker.min.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
+
+    <script type="text/javascript" src="/javascripts/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/javascripts/moment.min.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap-datepicker.min.js"></script>
     {% block content %}{% endblock %}
-    {% block scripts %}
-      <script type="text/javascript" src="/javascripts/bootstrap.js"></script>
-      <script type="text/javascript" src="/javascripts/jquery-2.1.4.min.js"></script>
-    {% endblock %}
+    {% block scripts %}{% endblock %}
   </body>
 </html>
