@@ -23,7 +23,7 @@
             <td><label for="">Recomendado por </label></td>
             <td>
               <input type="text" class="form-control" name="nombre_colega">
-              <input type="hidden" name="id_colega" value="">
+              <input type="hidden" name="id_referencia" value="">
             </td>
           </tr>
         </table>
@@ -50,7 +50,7 @@
       </div>
       <div class="col-sm-1">
         <label for="">Edad</label>
-        <input type="text" class="form-control" name="edad" />
+        <input type="text" class="form-control" name="edad_paciente" />
       </div>
       <div class="col-sm-3">
         <label for="">Teléfono</label>
@@ -78,14 +78,14 @@
       </div>
       <div class="col-sm-4">
         <label for="">Dientes</label>
-        <input type="text" class="form-control" name="dientes">
+        <input type="text" class="form-control" name="piezas_dentales">
       </div>
       <div class="col-sm-4">
         <label for="">Ha sido anesteciado antes?</label>
-        <select class="form-control" name="asistencia">
+        <select class="form-control" name="anestecia_previa">
           <option value=""></option>
-          <option value="SI">SI</option>
-          <option value="NO">NO</option>
+          <option value="true">SI</option>
+          <option value="false">NO</option>
         </select>
       </div>
     </div><!--Ficha endodoncia-->
@@ -97,24 +97,24 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <input type="checkbox" name="alergia" value="1"> Anestesia
-        <input type="checkbox" name="alergia" value="2"> Penicilina
-        <input type="checkbox" name="alergia" value="3"> Latex
-        <input type="checkbox" name="alergia" value="4"> Yodo
-        <input type="checkbox" name="alergia" value="5"> Cloro
-        Otro: <input type="text" class="form-control">
+        <input type="checkbox" name="alergias[1]" value="1"> Anestesia
+        <input type="checkbox" name="alergias[2]" value="2"> Penicilina
+        <input type="checkbox" name="alergias[3]" value="3"> Latex
+        <input type="checkbox" name="alergias[4]" value="4"> Yodo
+        <input type="checkbox" name="alergias[5]" value="5"> Cloro
+        Otro: <input type="text" class="form-control" name="otra_alergia">
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12">
         <label for="">¿Presenta algún tipo de enfermedad y/o dolor en este momento?:</label>
-        <input type="text" class="form-control" name="enfermedad" value="">
+        <input type="text" class="form-control" name="enfermedad_dolores" value="">
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12">
         <label for="">¿Que medicamentos ha tomado en las últimas 2 semanas?:</label>
-        <input type="text" class="form-control" name="medicamentos" value="">
+        <input type="text" class="form-control" name="ultimos_medicamentos" value="">
       </div>
     </div> <!--Alergias-->
     <div class="row">
@@ -129,42 +129,42 @@
         <div class="problema">
           <label for="">Problemas digestivos</label>
           <div class="opciones">
-            <input type="checkbox" name="problema[1]" value="1">
+            <input type="checkbox" name="problemas[1]" value="1">
             <i>?</i>
           </div>
         </div>
         <div class="problema">
           <label for="">Problemas Respiratorios</label>
           <div class="opciones">
-            <input type="checkbox" name="problema[2]" value="2">
+            <input type="checkbox" name="problemas[2]" value="2">
             <i>?</i>
           </div>
         </div>
         <div class="problema">
           <label for="">Problemas del Corazón</label>
           <div class="opciones">
-            <input type="checkbox" name="problema[3]" value="3">
+            <input type="checkbox" name="problemas[3]" value="3">
             <i>?</i>
           </div>
         </div>
         <div class="problema">
           <label for="">Problemas Hermáticos</label>
           <div class="opciones">
-            <input type="checkbox" name="problema[4]" value="4">
+            <input type="checkbox" name="problemas[4]" value="4">
             <i>?</i>
           </div>
         </div>
         <div class="problema">
           <label for="">Problemas Genilu-Urinario</label>
           <div class="opciones">
-            <input type="checkbox" name="problema[5]" value="5">
+            <input type="checkbox" name="problemas[5]" value="5">
             <i>?</i>
           </div>
         </div>
         <div class="problema">
           <label for="">Problemas Endorcinos</label>
           <div class="opciones">
-            <input type="checkbox" name="problema[6]" value="6">
+            <input type="checkbox" name="problemas[6]" value="6">
             <i>?</i>
           </div>
         </div>
@@ -177,39 +177,39 @@
     </div>
     <div class="row">
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[1]" value="1"> Caries
+        <input type="checkbox" name="antecendentes_diente[1]" value="1"> Caries
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[2]" value="2"> Amalgama
+        <input type="checkbox" name="antecendentes_diente[2]" value="2"> Amalgama
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[3]" value="3"> Traumatismo
+        <input type="checkbox" name="antecendentes_diente[3]" value="3"> Traumatismo
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[4]" value="4"> Corona
+        <input type="checkbox" name="antecendentes_diente[4]" value="4"> Corona
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[5]" value="5"> Resina
+        <input type="checkbox" name="antecendentes_diente[5]" value="5"> Resina
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[6]" value="6"> Curación
+        <input type="checkbox" name="antecendentes_diente[6]" value="6"> Curación
       </div>
 
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[7]" value="7"> Incrustación
+        <input type="checkbox" name="antecendentes_diente[7]" value="7"> Incrustación
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[8]" value="8"> Provicional
+        <input type="checkbox" name="antecendentes_diente[8]" value="8"> Provicional
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[9]" value="9"> Ninguna
+        <input type="checkbox" name="antecendentes_diente[9]" value="9"> Ninguna
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="antecendente[10]" value="10"> Retratamiento
+        <input type="checkbox" name="antecendentes_diente[10]" value="10"> Retratamiento
       </div>
       <div class="col-sm-4">
-        <input type="checkbox" name="antecendente[11]" value="11"> Otro
-        <input type="text" class="form-control" name="antecedente_otro" value="">
+        <input type="checkbox" name="antecendentes_diente[11]" value="11"> Otro
+        <input type="text" class="form-control" name="otro_antecedente" value="">
       </div>
     </div> <!--Antecedentes del tiente a tratar (interrogatorio)-->
     <div class="row">
@@ -351,16 +351,16 @@
     </div>
     <div class="row">
       <div class="col-sm-2">
-        <input type="checkbox" name="diagnostico_pulpal[1]" value="1"> Pulpitis reversible
+        <input type="checkbox" name="diagnostico_pulpar[1]" value="1"> Pulpitis reversible
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="diagnostico_pulpal[2]" value="2"> Pulpitis irreversible 
+        <input type="checkbox" name="diagnostico_pulpar[2]" value="2"> Pulpitis irreversible 
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="diagnostico_pulpal[3]" value="3"> Necrosis pulpar
+        <input type="checkbox" name="diagnostico_pulpar[3]" value="3"> Necrosis pulpar
       </div>
       <div class="col-sm-2">
-        <input type="checkbox" name="diagnostico_pulpal[4]" value="4"> Sin pulpa
+        <input type="checkbox" name="diagnostico_pulpar[4]" value="4"> Sin pulpa
       </div>
     </div><!--Diagnóstico Pulpal-->
     <div class="row">
@@ -504,10 +504,10 @@
         <label>Pronóstico</label>
         </div>
         <div class="col-sm-4">
-          <input type="checkbox" name="pronostico[1]" value="1"> Favorable
+          <input type="radio" name="pronostico" value="true"> Favorable
         </div>
         <div class="col-sm-4">
-          <input type="checkbox" name="pronostico[2]" value="2"> Reservado
+          <input type="radio" name="pronostico" value="false"> Reservado
         </div>
       </div>
       <br>
@@ -540,7 +540,7 @@
         <tbody>
           <tr>
             <td></td>
-            <td></td>
+            <td><textarea name="nota_evolucion" class="form-control"></textarea></td>
           </tr>
           <tr>
             <td></td>
