@@ -12,20 +12,33 @@ router.get('/', function(req, res, next) {
 router.post('/save', function(req, res, next){
 	var db = req.app.get('db');
 	var expediente = {
-		ids_problemas: req.body.problemas,
-		ids_alergias: req.body.alergias,
-		ids_antecedentes_del_diente: req.body.antecendentes_diente,
-		otro_antecedentes_del_diente: req.body.otro_antecedente,
-		ids_examen_clinico: req.body.examen_clinico,
-		ids_pulpa: req.body.pulpa,
-		ids_palpitacion_periapcial: req.body.palpacion_periapical,
-		ids_conducto_radicular_rx: req.body.conducto_radicular,
-		ids_zona_periapcial_rx: req.body.zona_periapical,
-		ids_diagnostico_pulpar: req.body.diagnostico_pulpar,
-		ids_diagnostico_periapcial_presuncion: req.body.diagnostico_periapical_presuncion,
-		ids_interencion_indicada: req.body.intereccion_indicada
+		id_paciente: 		req.body.id_paciente,
+		anestecia_previa: 	req.body.anestecia_previa || false,
+		fecha_expediente: 	req.body.fecha_expediente || null,
+		id_referencia: 		req.body.id_referencia || null,
+		edad_paciente: 		req.body.edad_paciente || null,
+		piezas_dentales: 	req.body.piezas_dentales || null,
+		ids_alergias: 		req.body.alergias || null,
+		otra_alergia: 		req.body.otra_alergia || null,
+		enfermedad_dolores: req.body.enfermedad_dolores || null, 
+		ultimos_medicamentos: req.body.ultimos_medicamentos || null,
+		
+		ids_problemas: 					req.body.problemas || null,
+		ids_antecedentes_del_diente: 	req.body.antecendentes_diente || null,
+		otro_antecedentes_del_diente: 	req.body.otro_antecedente || null,
+		ids_examen_clinico: 			req.body.examen_clinico || null,
+		ids_pulpa: 						req.body.pulpa || null,
+		ids_palpitacion_periapcial: 	req.body.palpacion_periapical || null,
+		ids_conducto_radicular_rx: 		req.body.conducto_radicular || null,
+		ids_zona_periapcial_rx: 		req.body.zona_periapical || null,
+		ids_diagnostico_pulpar: 		req.body.diagnostico_pulpar || null,
+		ids_diagnostico_periapcial_presuncion: req.body.diagnostico_periapical_presuncion || null,
+		ids_interencion_indicada: 		req.body.intereccion_indicada || null,
+		
+		control_de_tratamiento: req.body.control_de_tratamiento || null,
+		pronostico: 			req.body.pronostico || false,
+		nota_evolucion: 		req.body.nota_evolucion || null
 	};
-	expediente = extend(expediente,req.body);
 
 	db.ma_endodoncia.insert(expediente, function(err, data){
 		if(err) return res.send(err);
