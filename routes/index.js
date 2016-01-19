@@ -46,6 +46,14 @@ router.post('/save', function(req, res, next){
 	});
 });
 
+router.post('/colegas', function(req, res, next) {
+	var db = req.app.get('db');
+	db.run("SELECT * FROM ca_colegas WHERE lower(nombre_completo) LIKE '%"+req.body.query+"%'", function(err, data){
+		if(err) return res.send(err);
+		res.json(data);
+	});
+});
+
 router.get('/index/ejemplo', function(req, res, next) {
   res.render('form/ejemplo', { title: 'Formulario Ejemplo' });
 });

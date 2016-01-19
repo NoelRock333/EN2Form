@@ -41,3 +41,16 @@ CREATE TABLE "public"."ma_endodoncia" (
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "public"."ma_endodoncia" ADD PRIMARY KEY ("id");
+
+
+
+DROP TABLE IF EXISTS "public"."ca_colegas";
+CREATE TABLE "public"."ca_colegas" (
+	id bigserial NOT NULL,
+	nombre character varying,
+	apellido_paterno character varying,
+	apellido_materno character varying,
+	nombre_completo character varying
+)
+WITH (OIDS=FALSE);
+ALTER TABLE "public"."ca_colegas" ADD PRIMARY KEY ("id");

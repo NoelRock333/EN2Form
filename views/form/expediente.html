@@ -9,9 +9,9 @@
       <div class="col-sm-7">
         <table width="100%">
           <tr>
-            <td><label for="">Fecha </label></td>
+            <td style="width:145px"><label for="">Fecha </label></td>
             <td>
-              <div class="input-group date" data-provide="datepicker">
+              <div class="input-group date col-sm-5" data-provide="datepicker">
                   <input type="text" class="form-control" name="fecha_expediente">
                   <div class="input-group-addon">
                       <span class="glyphicon glyphicon-th"></span>
@@ -22,7 +22,9 @@
           <tr>
             <td><label for="">Recomendado por </label></td>
             <td>
-              <input type="text" class="form-control" name="nombre_colega">
+              <div id="remote1">
+                <input type="text" class="form-control" name="nombre_colega" id="nombre_colega">
+              </div>
               <input type="hidden" name="id_referencia" value="">
             </td>
           </tr>
@@ -589,7 +591,9 @@
 {% block scripts %}
   <script type="text/javascript">
     $(document).on("ready", function(){
-
+      $('#nombre_colega').typeahead({
+        ajax: '/colegas'
+      });
     });
   </script>
 {% endblock %}
