@@ -54,3 +54,23 @@ CREATE TABLE "public"."ca_colegas" (
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "public"."ca_colegas" ADD PRIMARY KEY ("id");
+
+
+
+DROP TABLE IF EXISTS "public"."ca_pacientes";
+CREATE TABLE "public"."ca_pacientes" (
+	id bigserial NOT NULL,
+	nombre character varying,
+	apellido_paterno character varying,
+	apellido_materno character varying,
+	nombre_completo character varying,
+	sexo character,
+	fecha_nacimiento date,
+	telefono character varying,
+	direccion character varying,
+	colonia character varying,
+	ciudad character varying,
+	ocupacion character varying
+)
+WITH (OIDS=FALSE);
+ALTER TABLE "public"."ca_pacientes" ADD PRIMARY KEY ("id");

@@ -22,10 +22,8 @@
           <tr>
             <td><label for="">Recomendado por </label></td>
             <td>
-              <div id="remote1">
-                <input type="text" class="form-control" name="nombre_colega" id="nombre_colega">
-              </div>
-              <input type="hidden" name="id_referencia" value="">
+              <input type="text" class="form-control" name="nombre_colega" id="nombre_colega">
+              <input type="hidden" name="id_referencia" id="id_referencia" value="">
             </td>
           </tr>
         </table>
@@ -40,7 +38,8 @@
     <div class="row">
       <div class="col-sm-6">
         <label for="">Paciente</label>
-        <input type="text" class="form-control" name="nombre_paciente" />
+        <input type="text" class="form-control" name="nombre_paciente" id="nombre_paciente" />
+        <input type="hidden" name="id_paciente" id="id_paciente" />
       </div>
       <div class="col-sm-2">
         <label for="">Sexo</label>
@@ -592,7 +591,21 @@
   <script type="text/javascript">
     $(document).on("ready", function(){
       $('#nombre_colega').typeahead({
-        ajax: '/colegas'
+        ajax: '/colegas',
+        display: 'nombre_completo',
+        val: 'id',
+        itemSelected: function(item){
+          $("#id_referencia").val($(item).data('value'));
+        }
+      });
+
+      $('#nombre_paciente').typeahead({
+        ajax: '/pacientes',
+        display: 'nombre_completo',
+        val: 'id',
+        itemSelected: function(item){
+          $("#id_paciente").val($(item).data('value'));
+        }
       });
     });
   </script>
