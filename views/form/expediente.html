@@ -586,6 +586,57 @@
     </div>
   </div>
 </form>
+
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-paciente">
+  Agregar paciente
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-paciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nuevo paciente</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/" id="form-paciente">
+          <label>Nombre</label>
+          <input type="text" class="form-control" name="nombre">
+          <label>Primer apellido</label>
+          <input type="text" class="form-control" name="apellido_paterno">
+          <label>Segundo apellido</label>
+          <input type="text" class="form-control" name="apellido_materno">
+          <label>Sexo</label>
+          <select name="sexo" class="form-control" style="width:40%">
+            <option value=""></option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+          </select>
+          <label>Fecha de nacimiento</label>
+          <div class="input-group date col-sm-5" data-provide="datepicker">
+              <input type="text" class="form-control" name="fecha_nacimiento">
+              <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+              </div>
+          </div>
+          <label>Teléfono</label>
+          <input type="text" class="form-control" name="telefono">
+          <label>Colonia</label>
+          <input type="text" class="form-control" name="colonia">
+          <label>Ciudad</label>
+          <input type="text" class="form-control" name="ciudad">
+          <label>Ocupación</label>
+          <input type="text" class="form-control" name="ocupacion">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-success" id="btn-guardar-paciente">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
@@ -613,6 +664,7 @@
         $.ajax({
           url: "/save",
           type: "POST",
+          dataType: "JSON",
           data: $("#form-expediente").serialize(),
           success: function(data){
             if(data.message){
@@ -632,6 +684,27 @@
         $("#form-expediente")[0].reset();
         $("#form-expediente [type=hidden]").val("");
       });
+
+      $("#btn-guardar-paciente").on("click", function(){
+        $.ajax({
+          url: "/nuevo_paciente",
+          type: "POST",
+          dataType: "JSON",
+          data: $("#form-paciente").serialize(),
+          success: function(data){
+            if(data.message){
+              bootbox.alert(data.message);
+            }
+            else{
+              bootbox.alert("Paciente guardado correctamente");
+              $('#modal-paciente').modal('hide');
+              console.log(data);
+            }
+          }
+        });
+        return false;
+      });
+
     });
   </script>
 {% endblock %}

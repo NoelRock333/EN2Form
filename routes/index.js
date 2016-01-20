@@ -11,19 +11,10 @@ router.get('/', function(req, res, next) {
 /*POST Form*/
 router.post('/save', function(req, res, next){
 	var db = req.app.get('db');
-	function dateFormat(){
-		if(req.body.fecha_expediente){
-			var date = req.body.fecha_expediente.split('/');
-			return date[2]+'-'+date[0]+'-'+date[1];
-		}
-		else{
-			return "00-00-0000";
-		}
-	}
 	var expediente = {
 		id_paciente: 		req.body.id_paciente,
 		anestecia_previa: 	req.body.anestecia_previa || false,
-		fecha_expediente: 	dateFormat() || null,
+		fecha_expediente: 	dateFormat(req.body.fecha_expediente) || null,
 		id_referencia: 		req.body.id_referencia || null,
 		edad_paciente: 		req.body.edad_paciente || null,
 		piezas_dentales: 	req.body.piezas_dentales || null,
@@ -52,6 +43,16 @@ router.post('/save', function(req, res, next){
 	db.ma_endodoncia.insert(expediente, function(err, data){
 		if(err) return res.send(err);
 		res.send(data);
+	});
+});
+
+router.post('/nuevo_paciente', function(req, res, next){
+	var db = req.app.get('db');
+	req.body.fecha_nacimiento = dateFormat(req.body.fecha_nacimiento) == "00-00-0000" ? null: dateFormat(req.body.fecha_nacimiento);
+	req.body.nombre_completo = `${req.body.nombre} ${req.body.apellido_paterno} ${req.body.apellido_materno}`.trim();
+	db.ca_pacientes.insert(req.body, function(err, data){
+		if(err) return res.send(err);
+		res.json(data);
 	});
 });
 
@@ -84,3 +85,13 @@ router.post('/index/save-form', function(req, res, next) {
 });
 
 module.exports = router;
+
+function dateFormat(fecha){
+	if(fecha){
+		var date = fecha.split('/');
+		return date[2]+'-'+date[0]+'-'+date[1];
+	}
+	else{
+		return "00-00-0000";
+	}
+}

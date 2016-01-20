@@ -60,10 +60,10 @@ ALTER TABLE "public"."ca_colegas" ADD PRIMARY KEY ("id");
 DROP TABLE IF EXISTS "public"."ca_pacientes";
 CREATE TABLE "public"."ca_pacientes" (
 	id bigserial NOT NULL,
-	nombre character varying,
-	apellido_paterno character varying,
+	nombre character varying NOT NULL,
+	apellido_paterno character varying NOT NULL,
 	apellido_materno character varying,
-	nombre_completo character varying,
+	nombre_completo character varying NOT NULL,
 	sexo character,
 	fecha_nacimiento date,
 	telefono character varying,
