@@ -11,10 +11,19 @@ router.get('/', function(req, res, next) {
 /*POST Form*/
 router.post('/save', function(req, res, next){
 	var db = req.app.get('db');
+	function dateFormat(){
+		if(req.body.fecha_expediente){
+			var date = req.body.fecha_expediente.split('/');
+			return date[2]+'-'+date[0]+'-'+date[1];
+		}
+		else{
+			return "00-00-0000";
+		}
+	}
 	var expediente = {
 		id_paciente: 		req.body.id_paciente,
 		anestecia_previa: 	req.body.anestecia_previa || false,
-		fecha_expediente: 	req.body.fecha_expediente || null,
+		fecha_expediente: 	dateFormat() || null,
 		id_referencia: 		req.body.id_referencia || null,
 		edad_paciente: 		req.body.edad_paciente || null,
 		piezas_dentales: 	req.body.piezas_dentales || null,
