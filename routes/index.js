@@ -56,6 +56,18 @@ router.post('/nuevo_paciente', function(req, res, next){
 	});
 });
 
+router.post('/nuevo_colega', function(req, res, next){
+	var db = req.app.get('db');
+	req.body.nombre 			= req.body.nombre || null;
+	req.body.apellido_paterno 	= req.body.apellido_paterno || null;
+	req.body.nombre_completo 	= `${req.body.nombre} ${req.body.apellido_paterno} ${req.body.apellido_materno}`.trim();
+	db.ca_colegas.insert(req.body, function(err, data){
+		if(err) return res.send(err);
+		res.json(data);
+	});
+});
+
+
 router.post('/colegas', function(req, res, next) {
 	var db = req.app.get('db');
 	db.run("SELECT * FROM ca_colegas WHERE lower(nombre_completo) LIKE '%"+req.body.query+"%'", function(err, data){

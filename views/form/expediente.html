@@ -6,6 +6,13 @@
       <div class="col-sm-5">
         <img src="" id="logo" alt="" />
         <div id="btn-limpiar-form" class="btn btn-warning">Limpiar formulario</div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-colega">
+          Agregar colega
+        </button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-paciente">
+          Agregar paciente
+        </button>
+
       </div>
       <div class="col-sm-7">
         <table width="100%">
@@ -44,7 +51,7 @@
       </div>
       <div class="col-sm-2">
         <label for="">Sexo</label>
-        <select class="form-control" name="sexo" />
+        <select class="form-control" name="sexo" id="sexo" />
           <option value=""></option>
           <option value="M">Masculino</option>
           <option value="F">Femenino</option>
@@ -56,27 +63,27 @@
       </div>
       <div class="col-sm-3">
         <label for="">Teléfono</label>
-        <input type="text" class="form-control" name="telefono" value="">
+        <input type="text" class="form-control" name="telefono" id="telefono" value="">
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4">
         <label for="">Dirección</label>
-        <input type="text" class="form-control" name="direccion">
+        <input type="text" class="form-control" name="direccion" id="direccion">
       </div>
       <div class="col-sm-4">
         <label for="">Colonia</label>
-        <input type="text" class="form-control" name="colonia">
+        <input type="text" class="form-control" name="colonia" id="colonia">
       </div>
       <div class="col-sm-4">
         <label for="">Ciudad</label>
-        <input type="text" class="form-control" name="ciudad">
+        <input type="text" class="form-control" name="ciudad" id="ciudad">
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4">
         <label for="">Ocupación</label>
-        <input type="text" class="form-control" name="ocupacion">
+        <input type="text" class="form-control" name="ocupacion" id="ocupacion">
       </div>
       <div class="col-sm-4">
         <label for="">Dientes</label>
@@ -587,10 +594,6 @@
   </div>
 </form>
 
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal-paciente">
-  Agregar paciente
-</button>
-
 <!-- Modal -->
 <div class="modal fade" id="modal-paciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -622,6 +625,8 @@
           </div>
           <label>Teléfono</label>
           <input type="text" class="form-control" name="telefono">
+          <label>Dirección</label>
+          <input type="text" class="form-control" name="direccion">
           <label>Colonia</label>
           <input type="text" class="form-control" name="colonia">
           <label>Ciudad</label>
@@ -637,74 +642,37 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal-colega" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nuevo colega</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/" id="form-colega">
+          <label>Nombre</label>
+          <input type="text" class="form-control" name="nombre">
+          <label>Primer apellido</label>
+          <input type="text" class="form-control" name="apellido_paterno">
+          <label>Segundo apellido</label>
+          <input type="text" class="form-control" name="apellido_materno">
+          <label>Especialidad</label>
+          <input type="text" class="form-control" name="especialidad">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-success" id="btn-guardar-colega">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-  <script type="text/javascript">
-    $(document).on("ready", function(){
-      $('#nombre_colega').typeahead({
-        ajax: '/colegas',
-        display: 'nombre_completo',
-        val: 'id',
-        itemSelected: function(item){
-          $("#id_referencia").val($(item).data('value'));
-        }
-      });
-
-      $('#nombre_paciente').typeahead({
-        ajax: '/pacientes',
-        display: 'nombre_completo',
-        val: 'id',
-        itemSelected: function(item){
-          $("#id_paciente").val($(item).data('value'));
-        }
-      });
-
-      $("#form-expediente").on("submit", function(){
-        $.ajax({
-          url: "/save",
-          type: "POST",
-          dataType: "JSON",
-          data: $("#form-expediente").serialize(),
-          success: function(data){
-            if(data.message){
-              bootbox.alert(data.message);
-            }
-            else{
-              bootbox.alert("Expediente guardado correctamente");
-              $("html, body").animate({ scrollTop: 0 }, "slow");
-              $("#fecha_expediente").val("");
-            }
-          }
-        });
-        return false;
-      });
-
-      $("#btn-limpiar-form").on("click", function(){
-        $("#form-expediente")[0].reset();
-        $("#form-expediente [type=hidden]").val("");
-      });
-
-      $("#btn-guardar-paciente").on("click", function(){
-        $.ajax({
-          url: "/nuevo_paciente",
-          type: "POST",
-          dataType: "JSON",
-          data: $("#form-paciente").serialize(),
-          success: function(data){
-            if(data.message){
-              bootbox.alert(data.message);
-            }
-            else{
-              bootbox.alert("Paciente guardado correctamente");
-              $('#modal-paciente').modal('hide');
-              console.log(data);
-            }
-          }
-        });
-        return false;
-      });
-
-    });
-  </script>
+  <script type="text/javascript" src="/javascripts/expediente_endodoncia.js"></script>
 {% endblock %}

@@ -47,14 +47,14 @@ ALTER TABLE "public"."ma_endodoncia" ADD PRIMARY KEY ("id");
 DROP TABLE IF EXISTS "public"."ca_colegas";
 CREATE TABLE "public"."ca_colegas" (
 	id bigserial NOT NULL,
-	nombre character varying,
-	apellido_paterno character varying,
+	nombre character varying NOT NULL,
+	apellido_paterno character varying NOT NULL,
 	apellido_materno character varying,
-	nombre_completo character varying
+	nombre_completo character varying,
+	especialidad character varying
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "public"."ca_colegas" ADD PRIMARY KEY ("id");
-
 
 
 DROP TABLE IF EXISTS "public"."ca_pacientes";
