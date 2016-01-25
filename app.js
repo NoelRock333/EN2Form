@@ -8,6 +8,7 @@ var swig = require('swig');
 var massive = require("massive");
 var connectionString = "postgres://postgres:123@localhost/EN2";
 var massiveInstance = massive.connectSync({connectionString : connectionString}) ;
+var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -30,6 +31,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  /*genid: function(req) {
+    return genuuid() // use UUIDs for session IDs
+  },*/
+  secret: 'mysupersecretkey'
+}))
 
 app.use('/', routes);
 app.use('/users', users);

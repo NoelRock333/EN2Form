@@ -37,7 +37,10 @@ CREATE TABLE "public"."ma_endodoncia" (
 	ids_interencion_indicada integer[],
 	control_de_tratamiento integer[][],
 	pronostico boolean,
-	nota_evolucion character varying
+	nota_evolucion character varying,
+	id_usuario integer NOT NULL,
+	id_clinica integer NOT NULL,
+	id_titular integer NOT NULL
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "public"."ma_endodoncia" ADD PRIMARY KEY ("id");
@@ -57,6 +60,7 @@ WITH (OIDS=FALSE);
 ALTER TABLE "public"."ca_colegas" ADD PRIMARY KEY ("id");
 
 
+
 DROP TABLE IF EXISTS "public"."ca_pacientes";
 CREATE TABLE "public"."ca_pacientes" (
 	id bigserial NOT NULL,
@@ -74,3 +78,25 @@ CREATE TABLE "public"."ca_pacientes" (
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "public"."ca_pacientes" ADD PRIMARY KEY ("id");
+
+
+
+DROP TABLE IF EXISTS "public"."ca_usuarios";
+CREATE TABLE "public"."ca_usuarios" (
+	id bigserial NOT NULL,
+	email character varying NOT NULL,
+	password character varying NOT NULL,
+	nombre character varying NOT NULL,
+	apellido_paterno character varying NOT NULL,
+	apellido_materno character varying,
+	nombre_completo character varying NOT NULL,
+	sexo character,
+	fecha_nacimiento date,
+	telefono character varying,
+	direccion character varying,
+	colonia character varying,
+	ciudad character varying,
+	ocupacion character varying
+)
+WITH (OIDS=FALSE);
+ALTER TABLE "public"."ca_usuarios" ADD PRIMARY KEY ("id");

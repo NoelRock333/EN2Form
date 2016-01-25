@@ -2,16 +2,44 @@ var express = require('express');
 var router = express.Router();
 var extend = require('util')._extend;
 var moment = require('moment');
-/* GET home page. */
-router.get('/', function(req, res, next) {
+var utils = require('../lib/utils');
+var passwordHash = require('password-hash');
+
+//Formulario para llenar expediente de Endodocia
+router.get('/', utils.requireAuthorization, function(req, res, next) {
   res.render('form/expediente', { title: 'Express' });
 });
 
+//Muestra formulario de login
+router.get('/login', function(req, res, next) {
+	res.render('form/login', { title: 'EN2Cloud login' });
+});
+
+//Crea sesión
+router.post('/login', function(req, res, next) {
+	var db = req.app.get('db');
+	db.ca_usuarios.findOne({ email: req.body.email }, function(err, user){
+		if(err) return res.redirect('/login');
+		if(passwordHash.verify('password123', user.password)){
+			req.session.user = user;
+			res.redirect('/');
+		}
+		else{
+			res.redirect('/login');
+		}
+	});
+});
+
+//Destruye sesión
+router.get('/logout', function(req, res, next) {
+	req.session.destroy(function(err) {
+		res.redirect('/login');
+	});
+});
 
 /*POST Form*/
-router.post('/save', function(req, res, next){
+router.post('/save', utils.requireAuthorization, function(req, res, next){
 	var db = req.app.get('db');
-	console.log(req.body.piezas_dentales);
 	var expediente = {
 		id_paciente: 		req.body.id_paciente,
 		anestecia_previa: 	req.body.anestecia_previa || false,
@@ -38,7 +66,11 @@ router.post('/save', function(req, res, next){
 		
 		control_de_tratamiento: req.body.control_de_tratamiento || null,
 		pronostico: 			req.body.pronostico || false,
-		nota_evolucion: 		req.body.nota_evolucion || null
+		nota_evolucion: 		req.body.nota_evolucion || null,
+		
+		id_usuario: 		req.session.user.id,
+		id_clinica: 		1, //Dejamos un numero por defecto para primera fase, pero debe cambiarse
+		id_titular: 		1  //Dejamos un numero por defecto para primera fase, pero debe cambiarse
 	};
 
 	db.ma_endodoncia.insert(expediente, function(err, data){
