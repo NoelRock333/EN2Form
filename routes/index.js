@@ -15,10 +15,10 @@ router.post('/save', function(req, res, next){
 	var expediente = {
 		id_paciente: 		req.body.id_paciente,
 		anestecia_previa: 	req.body.anestecia_previa || false,
-		fecha_expediente: 	req.body.fecha_expediente ? moment(req.body.fecha_expediente, "DD/MM/YYYY").format("YYYY-MM-DD") : null,
+		fecha_expediente: 	req.body.fecha_expediente ? moment(req.body.fecha_expediente, 'DD/MM/YYYY').format('YYYY-MM-DD') : null,
 		id_referencia: 		req.body.id_referencia || null,
 		edad_paciente: 		req.body.edad_paciente || null,
-		piezas_dentales: 	req.body.piezas_dentales || null,
+		piezas_dentales: 	req.body.piezas_dentales ? req.body.piezas_dentales.split(',') : null,
 		ids_alergias: 		req.body.alergias || null,
 		otra_alergia: 		req.body.otra_alergia || null,
 		enfermedad_dolores: req.body.enfermedad_dolores || null, 

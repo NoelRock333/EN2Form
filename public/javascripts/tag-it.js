@@ -35,7 +35,7 @@
             readOnly          : false,  // Disables editing.
             removeConfirmation: false,  // Require confirmation to remove tags.
             tagLimit          : null,   // Max number of tags allowed (null for unlimited).
-
+            onlyAvailableTags : false,
             // Used for autocomplete, unless you override `autocomplete.source`.
             availableTags     : [],
 
@@ -422,7 +422,12 @@
         },
 
         _isNew: function(name) {
-            return !this._findTagByLabel(name);
+            if(this.options.onlyAvailableTags && $.inArray(this._formatStr(name), this.options.availableTags)!=-1){
+                return true;
+            }
+            else{
+                return null;
+            }
         },
 
         _formatStr: function(str) {
