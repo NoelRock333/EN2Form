@@ -37,6 +37,7 @@ $(document).on("ready", function(){
 					bootbox.alert("Expediente guardado correctamente");
 					$("html, body").animate({ scrollTop: 0 }, "slow");
 					$("#fecha_expediente").val("");
+					$("#piezas_dentales").tagit("removeAll");
 				}
 			}
 		});
@@ -114,5 +115,6 @@ $(document).on("ready", function(){
 
 	$('.js_telefono').keypress(function (e){ if( e.which!=8 && e.which!=0 && e.which!=32 && e.which!=40 && e.which!=41 && (e.which<46 || e.which>57)){ return false; }});
 	$('.js_numerico').keypress(function (e){if( e.which!=8 && e.which!=0 && (e.which<46 || e.which>57)){return false;}});
+	$('.js_fecha').keypress(function (e){if( e.which!=47 && (e.which<46 || e.which>57)){return false;}});
 
 });

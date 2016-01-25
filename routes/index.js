@@ -39,6 +39,18 @@ router.get('/logout', function(req, res, next) {
 
 /*POST Form*/
 router.post('/save', utils.requireAuthorization, function(req, res, next){
+	function fillArray(name){
+		var newArray = [];
+		for(var i=0;i<4;i++){
+			var property_name = name+"_"+(i+1);
+			if(req.body[property_name])
+				newArray.push(req.body[property_name]);
+			else
+				newArray.push("");
+		}
+		return newArray;
+	}
+
 	var db = req.app.get('db');
 	var expediente = {
 		id_paciente: 		req.body.id_paciente,
@@ -64,7 +76,17 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 		ids_diagnostico_periapcial_presuncion: req.body.diagnostico_periapical_presuncion || null,
 		ids_interencion_indicada: 		req.body.intereccion_indicada || null,
 		
-		control_de_tratamiento: req.body.control_de_tratamiento || null,
+		conducto_unico: 			fillArray("conducto_unico"),
+		conducto_mesio_vestibular: 	fillArray("conducto_mesio_vestibular"),
+		conducto_disto_vestibular: 	fillArray("conducto_disto_vestibular"),
+		conducto_distal: 			fillArray("conducto_distal"),
+		conducto_mesio_lingual: 	fillArray("conducto_mesio_lingual"),
+		conducto_palatino: 			fillArray("conducto_palatino"),
+		conducto_vestibular: 		fillArray("conducto_vestibular"),
+		conducto_mv2: 				fillArray("conducto_MV2"),
+		conducto_disto_lingual: 	fillArray("conducto_disto_lingual"),
+		conducto_mesial: 			fillArray("conducto_mesial"),
+
 		pronostico: 			req.body.pronostico || false,
 		nota_evolucion: 		req.body.nota_evolucion || null,
 		
@@ -74,6 +96,7 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 	};
 
 	db.ma_endodoncia.insert(expediente, function(err, data){
+		console.log(err);
 		if(err) return res.send(err);
 		res.send(data);
 	});
@@ -81,7 +104,7 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 
 router.post('/nuevo_paciente', function(req, res, next){
 	var db = req.app.get('db');
-	req.body.fecha_nacimiento = dateFormat(req.body.fecha_nacimiento) == "00-00-0000" ? null: dateFormat(req.body.fecha_nacimiento);
+	req.body.fecha_nacimiento = req.body.fecha_nacimiento ? moment(req.body.fecha_nacimiento, 'DD/MM/YYYY').format('YYYY-MM-DD') : null,
 	req.body.nombre_completo = `${req.body.nombre} ${req.body.apellido_paterno} ${req.body.apellido_materno}`.trim();
 	db.ca_pacientes.insert(req.body, function(err, data){
 		if(err) return res.send(err);

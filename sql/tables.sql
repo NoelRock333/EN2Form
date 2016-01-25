@@ -35,9 +35,21 @@ CREATE TABLE "public"."ma_endodoncia" (
 	ids_diagnostico_pulpar integer[],
 	ids_diagnostico_periapcial_presuncion integer[],
 	ids_interencion_indicada integer[],
-	control_de_tratamiento integer[][],
+	--control_de_tratamiento integer[][],
+	conducto_unico character varying[],
+	conducto_mesio_vestibular character varying[],
+	conducto_disto_vestibular character varying[],
+	conducto_distal character varying[],
+	conducto_mesio_lingual character varying[],
+	conducto_palatino character varying[],
+	conducto_vestibular character varying[],
+	conducto_mv2 character varying[],
+	conducto_disto_lingual character varying[],
+	conducto_mesial character varying[],
+
 	pronostico boolean,
 	nota_evolucion character varying,
+
 	id_usuario integer NOT NULL,
 	id_clinica integer NOT NULL,
 	id_titular integer NOT NULL
