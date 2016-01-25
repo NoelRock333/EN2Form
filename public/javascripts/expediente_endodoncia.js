@@ -103,6 +103,11 @@ $(document).on("ready", function(){
 		return false;
 	});
 
+	$('#modal-colega, #modal-paciente').on('hide.bs.modal', function (e) {
+		$("#form-paciente")[0].reset();
+		$("#form-colega")[0].reset();
+	});
+
 	$.validate({
 		form: "#form-expediente"
 	});
