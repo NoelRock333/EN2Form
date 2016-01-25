@@ -107,4 +107,7 @@ $(document).on("ready", function(){
 		form: "#form-expediente"
 	});
 
+	$('.js_telefono').keypress(function (e){ if( e.which!=8 && e.which!=0 && e.which!=32 && e.which!=40 && e.which!=41 && (e.which<46 || e.which>57)){ return false; }});
+	$('.js_numerico').keypress(function (e){if( e.which!=8 && e.which!=0 && (e.which<46 || e.which>57)){return false;}});
+
 });
