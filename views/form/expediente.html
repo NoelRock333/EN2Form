@@ -1,4 +1,8 @@
 {% extends '../layout.html' %}
+{% block styles %}
+  <link rel="stylesheet" href="/stylesheets/jquery.tagit.css">
+  <link rel="stylesheet" href="/stylesheets/tagit.ui-zendesk.css">
+{% endblock %}
 {% block content %}
 <form action="/save" method="POST" id="form-expediente">
   <div class="container">
@@ -19,8 +23,8 @@
           <tr>
             <td style="width:145px"><label for="">Fecha </label></td>
             <td>
-              <div class="input-group date col-sm-5" data-provide="datepicker">
-                  <input type="text" class="form-control" name="fecha_expediente">
+              <div class="input-group date col-sm-5" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+                  <input type="text" class="form-control" name="fecha_expediente" required>
                   <div class="input-group-addon">
                       <span class="glyphicon glyphicon-th"></span>
                   </div>
@@ -30,7 +34,7 @@
           <tr>
             <td><label for="">Recomendado por </label></td>
             <td>
-              <input type="text" class="form-control" name="nombre_colega" id="nombre_colega" autocomplete="off">
+              <input type="text" class="form-control" name="nombre_colega" id="nombre_colega" autocomplete="off" />
               <input type="hidden" name="id_referencia" id="id_referencia" value="">
             </td>
           </tr>
@@ -46,12 +50,12 @@
     <div class="row">
       <div class="col-sm-6">
         <label for="">Paciente</label>
-        <input type="text" class="form-control" name="nombre_paciente" id="nombre_paciente" autocomplete="off" />
+        <input type="text" class="form-control" name="nombre_paciente" id="nombre_paciente" autocomplete="off" required />
         <input type="hidden" name="id_paciente" id="id_paciente" />
       </div>
       <div class="col-sm-2">
         <label for="">Sexo</label>
-        <select class="form-control" name="sexo" id="sexo" />
+        <select class="form-control" name="sexo" id="sexo" disabled="disabled" />
           <option value=""></option>
           <option value="M">Masculino</option>
           <option value="F">Femenino</option>
@@ -63,31 +67,31 @@
       </div>
       <div class="col-sm-3">
         <label for="">Teléfono</label>
-        <input type="text" class="form-control" name="telefono" id="telefono" value="">
+        <input type="text" class="form-control" name="telefono" id="telefono" value="" disabled="disabled">
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4">
         <label for="">Dirección</label>
-        <input type="text" class="form-control" name="direccion" id="direccion">
+        <input type="text" class="form-control" name="direccion" id="direccion" disabled="disabled">
       </div>
       <div class="col-sm-4">
         <label for="">Colonia</label>
-        <input type="text" class="form-control" name="colonia" id="colonia">
+        <input type="text" class="form-control" name="colonia" id="colonia" disabled="disabled">
       </div>
       <div class="col-sm-4">
         <label for="">Ciudad</label>
-        <input type="text" class="form-control" name="ciudad" id="ciudad">
+        <input type="text" class="form-control" name="ciudad" id="ciudad" disabled="disabled">
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4">
         <label for="">Ocupación</label>
-        <input type="text" class="form-control" name="ocupacion" id="ocupacion">
+        <input type="text" class="form-control" name="ocupacion" id="ocupacion" disabled="disabled">
       </div>
       <div class="col-sm-4">
         <label for="">Dientes</label>
-        <input type="text" class="form-control" name="piezas_dentales">
+        <input type="text" class="form-control" name="piezas_dentales" id="piezas_dentales">
       </div>
       <div class="col-sm-4">
         <label for="">Ha sido anesteciado antes?</label>
@@ -674,5 +678,7 @@
 {% endblock %}
 
 {% block scripts %}
+  <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/javascripts/tag-it.min.js"></script>
   <script type="text/javascript" src="/javascripts/expediente_endodoncia.js"></script>
 {% endblock %}

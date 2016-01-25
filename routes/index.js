@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var extend = require('util')._extend;
-
+var moment = require('moment');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('form/expediente', { title: 'Express' });
@@ -11,10 +11,11 @@ router.get('/', function(req, res, next) {
 /*POST Form*/
 router.post('/save', function(req, res, next){
 	var db = req.app.get('db');
+	console.log(req.body.piezas_dentales);
 	var expediente = {
 		id_paciente: 		req.body.id_paciente,
 		anestecia_previa: 	req.body.anestecia_previa || false,
-		fecha_expediente: 	dateFormat(req.body.fecha_expediente) || null,
+		fecha_expediente: 	req.body.fecha_expediente ? moment(req.body.fecha_expediente, "DD/MM/YYYY").format("YYYY-MM-DD") : null,
 		id_referencia: 		req.body.id_referencia || null,
 		edad_paciente: 		req.body.edad_paciente || null,
 		piezas_dentales: 	req.body.piezas_dentales || null,

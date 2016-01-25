@@ -1,4 +1,6 @@
 $(document).on("ready", function(){
+	$("#piezas_dentales").tagit();
+
 	$('#nombre_colega').typeahead({
 		ajax: '/colegas',
 		display: 'nombre_completo',
@@ -95,6 +97,10 @@ $(document).on("ready", function(){
 			}
 		});
 		return false;
+	});
+
+	$.validate({
+		form: "#form-expediente"
 	});
 
 });
