@@ -52,7 +52,9 @@ CREATE TABLE "public"."ma_endodoncia" (
 
 	id_usuario integer NOT NULL,
 	id_clinica integer NOT NULL,
-	id_titular integer NOT NULL
+	id_titular integer NOT NULL,
+	created_at timestamptz not null default now(),
+	updated_at timestamptz not null default now()
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "public"."ma_endodoncia" ADD PRIMARY KEY ("id");

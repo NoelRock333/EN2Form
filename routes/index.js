@@ -7,7 +7,7 @@ var passwordHash = require('password-hash');
 
 //Formulario para llenar expediente de Endodocia
 router.get('/', utils.requireAuthorization, function(req, res, next) {
-  res.render('form/expediente', { title: 'Express' });
+  res.render('form/expediente', { title: 'Express', user: req.session.user });
 });
 
 //Muestra formulario de login
