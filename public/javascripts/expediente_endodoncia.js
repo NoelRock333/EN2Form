@@ -1,8 +1,8 @@
 $(document).on("ready", function(){
 	$("#piezas_dentales").tagit({ 
-		availableTags: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38'], 
-		onlyAvailableTags: true, 
-		caseSensitive: false 
+		//availableTags: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38'], 
+		//onlyAvailableTags: true, 
+		//caseSensitive: false 
 	});
 
 	$('#nombre_colega').typeahead({
@@ -116,6 +116,8 @@ $(document).on("ready", function(){
 	$('.js_telefono').keypress(function (e){ if( e.which!=8 && e.which!=0 && e.which!=32 && e.which!=40 && e.which!=41 && (e.which<46 || e.which>57)){ return false; }});
 	$('.js_numerico').keypress(function (e){if( e.which!=8 && e.which!=0 && (e.which<46 || e.which>57)){return false;}});
 	$('.js_fecha').keypress(function (e){if( e.which!=47 && (e.which<46 || e.which>57)){return false;}});
+	//Solo acepta numeros
+	$('.ui-widget-content.ui-autocomplete-input').keypress(function (e){if( e.which!=8 && e.which!=0 && (e.which<46 || e.which>57)){return false;}});
 
 	$('.js_datepicker').datetimepicker({
 		format: 'DD/MM/YYYY'

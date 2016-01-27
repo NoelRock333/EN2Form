@@ -422,12 +422,13 @@
         },
 
         _isNew: function(name) {
-            if(this.options.onlyAvailableTags && $.inArray(this._formatStr(name), this.options.availableTags)!=-1){
+            /*if(this.options.onlyAvailableTags && $.inArray(this._formatStr(name), this.options.availableTags)!=-1){
                 return true;
             }
             else{
                 return null;
-            }
+            }*/
+            return !this._findTagByLabel(name);
         },
 
         _formatStr: function(str) {

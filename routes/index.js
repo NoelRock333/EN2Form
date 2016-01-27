@@ -39,6 +39,7 @@ router.get('/logout', function(req, res, next) {
 
 /*POST Form*/
 router.post('/save', utils.requireAuthorization, function(req, res, next){
+
 	function fillArray(name){
 		var newArray = [];
 		for(var i=0;i<4;i++){
@@ -51,6 +52,16 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 		return newArray;
 	}
 
+	function toArray(variable){
+		if(variable.constructor === Array){
+			return variable;
+		}
+		else{
+			var myArray = [variable];
+			return myArray;
+		}
+	}
+
 	var db = req.app.get('db');
 	var expediente = {
 		id_paciente: 		req.body.id_paciente,
@@ -58,23 +69,23 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 		fecha_expediente: 	req.body.fecha_expediente ? moment(req.body.fecha_expediente, 'DD/MM/YYYY').format('YYYY-MM-DD') : null,
 		id_referencia: 		req.body.id_referencia || null,
 		edad_paciente: 		req.body.edad_paciente || null,
-		piezas_dentales: 	req.body.piezas_dentales ? req.body.piezas_dentales.split(',') : null,
-		ids_alergias: 		req.body.alergias || null,
+		piezas_dentales: 	req.body.piezas_dentales ? toArray(req.body.piezas_dentales.split(',')) : null,
+		ids_alergias: 		req.body.alergias ? toArray(req.body.alergias) : null,
 		otra_alergia: 		req.body.otra_alergia || null,
 		enfermedad_dolores: req.body.enfermedad_dolores || null, 
 		ultimos_medicamentos: req.body.ultimos_medicamentos || null,
 		
-		ids_problemas: 					req.body.problemas || null,
-		ids_antecedentes_del_diente: 	req.body.antecendentes_diente || null,
+		ids_problemas: 					req.body.problemas ? toArray(req.body.problemas) : null,
+		ids_antecedentes_del_diente: 	req.body.antecendentes_diente ? toArray(req.body.antecendentes_diente) : null,
 		otro_antecedentes_del_diente: 	req.body.otro_antecedente || null,
-		ids_examen_clinico: 			req.body.examen_clinico || null,
-		ids_pulpa: 						req.body.pulpa || null,
-		ids_palpitacion_periapcial: 	req.body.palpacion_periapical || null,
-		ids_conducto_radicular_rx: 		req.body.conducto_radicular || null,
-		ids_zona_periapcial_rx: 		req.body.zona_periapical || null,
-		ids_diagnostico_pulpar: 		req.body.diagnostico_pulpar || null,
-		ids_diagnostico_periapcial_presuncion: req.body.diagnostico_periapical_presuncion || null,
-		ids_interencion_indicada: 		req.body.intereccion_indicada || null,
+		ids_examen_clinico: 			req.body.examen_clinico ? toArray(req.body.examen_clinico) : null,
+		ids_pulpa: 						req.body.pulpa ? toArray(req.body.pulpa) : null,
+		ids_palpitacion_periapcial: 	req.body.palpacion_periapical ? toArray(req.body.palpacion_periapical) : null,
+		ids_conducto_radicular_rx: 		req.body.conducto_radicular ? toArray(req.body.conducto_radicular) : null,
+		ids_zona_periapcial_rx: 		req.body.zona_periapical ? toArray(req.body.zona_periapical) : null,
+		ids_diagnostico_pulpar: 		req.body.diagnostico_pulpar ? toArray(req.body.diagnostico_pulpar) : null,
+		ids_diagnostico_periapcial_presuncion: req.body.diagnostico_periapical_presuncion ? toArray(req.body.diagnostico_periapical_presuncion) : null,
+		ids_interencion_indicada: 		req.body.intereccion_indicada ? toArray(req.body.intereccion_indicada) : null,
 		
 		conducto_unico: 			fillArray("conducto_unico"),
 		conducto_mesio_vestibular: 	fillArray("conducto_mesio_vestibular"),
