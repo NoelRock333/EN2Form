@@ -117,4 +117,7 @@ $(document).on("ready", function(){
 	$('.js_numerico').keypress(function (e){if( e.which!=8 && e.which!=0 && (e.which<46 || e.which>57)){return false;}});
 	$('.js_fecha').keypress(function (e){if( e.which!=47 && (e.which<46 || e.which>57)){return false;}});
 
+	$('.js_datepicker').datetimepicker({
+		format: 'DD/MM/YYYY'
+	});
 });

@@ -29,7 +29,7 @@
           <tr>
             <td style="width:145px"><label for="">Fecha </label></td>
             <td>
-              <div class="input-group date col-sm-5" data-provide="datepicker" data-date-format="dd/mm/yyyy">
+              <div class="input-group col-sm-5 js_datepicker">
                   <input type="text" class="form-control js_fecha" name="fecha_expediente" autocomplete="off" required>
                   <div class="input-group-addon">
                       <span class="glyphicon glyphicon-th"></span>
@@ -595,8 +595,8 @@
             <option value="F">Femenino</option>
           </select>
           <label>Fecha de nacimiento</label>
-          <div class="input-group date col-sm-5" data-provide="datepicker" data-date-format="dd/mm/yyyy">
-              <input type="text" class="form-control" name="fecha_nacimiento">
+          <div class="input-group js_datepicker">
+              <input type="text" class="form-control js_fecha" name="fecha_nacimiento" autocomplete="off" required>
               <div class="input-group-addon">
                   <span class="glyphicon glyphicon-th"></span>
               </div>
