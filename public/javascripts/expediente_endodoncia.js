@@ -38,6 +38,7 @@ $(document).on("ready", function(){
 					$("html, body").animate({ scrollTop: 0 }, "slow");
 					$("#fecha_expediente").val("");
 					$("#piezas_dentales").tagit("removeAll");
+					$("#btn-limpiar-form").trigger('click');
 				}
 			}
 		});
@@ -121,5 +122,15 @@ $(document).on("ready", function(){
 
 	$('.js_datepicker').datetimepicker({
 		format: 'DD/MM/YYYY'
+	});
+
+	//Hace foco en el primer elemento
+	$('#modal-paciente, #modal-colega').on('shown.bs.modal', function () {
+		$(this).find('.focus').focus()
+	});
+
+	//Previene que el formulario se guarde con enter
+	$(document).on("keypress", "#form-expediente", function(event) { 
+		return event.keyCode != 13;
 	});
 });
