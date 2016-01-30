@@ -1,0 +1,41 @@
+{% extends '../layout.html' %}
+
+{% block styles %}
+	<link rel="stylesheet" href="/stylesheets/jquery.dataTables.css">
+{% endblock %}
+
+{% block content %}
+<table class="table table-striped table-bordered" id="tabla-colegas">
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Apellido paterno</th>
+			<th>Apellido materno</th>
+			<th>Especialidad</th>
+			<th>Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for colega in colegas %}
+			<tr>
+				<td><%= colega.nombre %></td>
+				<td><%= colega.apellido_paterno %></td>
+				<td><%= colega.apellido_materno %></td>
+				<td><%= colega.especialidad %></td>
+				<td>
+					<a href="/colega/<%= colega.id %>">Editar</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="/javascripts/jquery.dataTables.js"></script>
+	<script type="text/javascript">
+		$(document).on("ready", function(){
+			$('#tabla-colegas').DataTable();
+		});
+	</script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends '../layout.html' %}
+
+{% block styles %}
+	<link rel="stylesheet" href="/stylesheets/jquery.dataTables.css">
+{% endblock %}
+
+{% block content %}
+<table class="table table-striped table-bordered" id="tabla-pacientes">
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Apellido paterno</th>
+			<th>Apellido materno</th>
+			<th>Ocupación</th>
+			<th>Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for paciente in pacientes %}
+			<tr>
+				<td><%= paciente.nombre %></td>
+				<td><%= paciente.apellido_paterno %></td>
+				<td><%= paciente.apellido_materno %></td>
+				<td><%= paciente.ocupacion %></td>
+				<td class="text-center">
+					<a href="/paciente/<%= paciente.id %>">Editar</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="/javascripts/jquery.dataTables.js"></script>
+	<script type="text/javascript">
+		$(document).on("ready", function(){
+			$('#tabla-pacientes').DataTable();
+		});
+	</script>
+{% endblock %}

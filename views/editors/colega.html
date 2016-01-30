@@ -1,0 +1,47 @@
+{% extends '../layout.html' %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<div class="col-sm-6 col-sm-offset-3">
+	<form action="/colega" id="form-colega">
+		<input type="hidden" name="id" value="<%=colega.id%>">
+		<label>Nombre</label>
+		<input type="text" class="form-control focus" name="nombre" required value="<%=colega.nombre%>">
+		<label>Primer apellido</label>
+		<input type="text" class="form-control" name="apellido_paterno" required value="<%=colega.apellido_paterno%>">
+		<label>Segundo apellido</label>
+		<input type="text" class="form-control" name="apellido_materno" value="<%=colega.apellido_materno%>">
+		<label>Especialidad</label>
+		<input type="text" class="form-control" name="especialidad" value="<%=colega.especialidad%>">
+		<br>
+	</form>
+	<input type="button" value="Guardar cambios" class="btn btn-success" id="btn-guardar">
+	<a href="/colegas">Regresar</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	$(document).on("ready", function(){
+		$("#btn-guardar").on("click", function(){
+			$form = $("#form-colega");
+			$.ajax({
+				url: $form.attr("action"),
+				data: $form.serialize(),
+				type: "PUT",
+				dataType: "JSON",
+				success: function(data){
+					if(data.message){
+						bootbox.alert(data.message);
+					}
+					else {
+						bootbox.alert("Colega editado correctamente");
+					}
+				}
+			});
+		});
+	});
+</script>
+{% endblock %}
