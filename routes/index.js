@@ -22,6 +22,7 @@ router.get('/login', function(req, res, next) {
 //Crea sesión
 router.post('/login', function(req, res, next) {
 	var db = req.app.get('db');
+	if(!req.body.email) return res.redirect('/login');
 	db.ca_usuarios.findOne({ email: req.body.email }, function(err, user){
 		if(err) return res.redirect('/login');
 		if(passwordHash.verify('password123', user.password)){

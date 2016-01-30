@@ -9,7 +9,6 @@
     {% block styles %}{% endblock %}
   </head>
   <body>
-
     <script type="text/javascript" src="/javascripts/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="/javascripts/moment.min.js"></script>
     <script type="text/javascript" src="/javascripts/bootstrap.js"></script>
@@ -17,6 +16,8 @@
     <script type="text/javascript" src="/javascripts/bootstrap-typeahead.js"></script>
     <script type="text/javascript" src="/javascripts/bootbox.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.8/jquery.form-validator.min.js"></script>
+    {% include "menu.html" ignore missing %}
+    <br>
     {% block content %}{% endblock %}
     {% block scripts %}{% endblock %}
   </body>
