@@ -11,7 +11,7 @@ router.get('/', utils.requireAuthorization, function(req, res, next) {
 });
 
 router.get('/expediente', utils.requireAuthorization, function(req, res, next) {
-  res.render('form/expediente', { title: 'Express', user: req.session.user });
+  res.render('form/expediente', { title: 'Expediente', user: req.session.user });
 });
 
 //Muestra formulario de login

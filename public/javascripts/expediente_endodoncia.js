@@ -72,6 +72,7 @@ $(document).on("ready", function(){
 
 	function llenarDatosPaciente(datos)
 	{
+		console.log(datos);
 		$("#nombre_paciente").val(datos.nombre_completo);
 		$("#id_paciente").val(datos.id);
 		$("#sexo").val(datos.sexo);
@@ -132,5 +133,16 @@ $(document).on("ready", function(){
 	//Previene que el formulario se guarde con enter
 	$(document).on("keypress", "#form-expediente", function(event) { 
 		return event.keyCode != 13;
+	});
+
+	$('#tabla-ctrl-tratamiento input').keyup(function(e){
+		if(e.which==39)
+			$(this).closest('td').next().find('input').focus();
+		else if(e.which==37)
+			$(this).closest('td').prev().find('input').focus();
+		else if(e.which==40)
+			$(this).closest('tr').next().find('td:eq('+$(this).closest('td').index()+')').find('input').focus();
+		else if(e.which==38)
+			$(this).closest('tr').prev().find('td:eq('+$(this).closest('td').index()+')').find('input').focus();
 	});
 });

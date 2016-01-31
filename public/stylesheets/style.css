@@ -4,13 +4,11 @@ body {
 }
 body .form-control {
   border-radius: 0px;
+  height: 42px;
 }
 body .btn {
   border-radius: 0px;
   font-size: 16px;
-}
-body #content {
-  margin-bottom: 30px;
 }
 a {
   color: #00b7ff;
@@ -29,4 +27,8 @@ a {
 }
 #form-login input {
   margin-bottom: 10px;
+}
+#tabla-ctrl-tratamiento.table-striped>tbody>tr input {
+  background: transparent;
+  border: none;
 }
