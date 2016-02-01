@@ -31,6 +31,7 @@ $(document).on("ready", function(){
 			dataType: "JSON",
 			data: $("#form-expediente").serialize(),
 			success: function(data){
+				console.log(data);
 				if(data.message){
 					bootbox.alert(data.message);
 				}
@@ -175,12 +176,12 @@ $(document).on("ready", function(){
 			$(this).closest('tr').prev().find('td:eq('+$(this).closest('td').index()+')').find('input').focus();
 	});
 
-	$('textarea').keypress(function(event) {
-		if (event.which == 13) {
-			event.preventDefault();
+	$('textarea').on('keypress', function(e){
+		if(e.which == 13){
+			e.preventDefault();
 			var s = $(this).val();
-			$(this).val(s+"\n");
+			$(this).val(s+'\n');
 		}
-	});​
+	});
 
 });

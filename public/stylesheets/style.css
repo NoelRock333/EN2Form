@@ -1,6 +1,6 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 body .form-control {
   border-radius: 0px;
@@ -10,12 +10,16 @@ body .btn {
   border-radius: 0px;
   font-size: 16px;
 }
+body .modal-content {
+  border-radius: 0px;
+}
 a {
   color: #00b7ff;
 }
 .problema {
   width: 100%;
   position: relative;
+  margin-bottom: 8px;
 }
 .problema .opciones {
   position: absolute;
@@ -28,7 +32,35 @@ a {
 #form-login input {
   margin-bottom: 10px;
 }
+#tabla-ctrl-tratamiento thead th {
+  padding: 10px 0px;
+  text-align: center;
+}
+#tabla-ctrl-tratamiento tbody label {
+  line-height: 42px;
+}
 #tabla-ctrl-tratamiento.table-striped>tbody>tr input {
   background: transparent;
   border: none;
+}
+#form-expediente .check-label {
+  font-size: 16px;
+}
+#form-expediente input[type=checkbox] {
+  margin-right: 5px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+#sect-paciente-1 input,
+#sect-paciente-2 input,
+#sect-paciente-3 input {
+  margin-bottom: 10px;
+}
+#sect-enfermedad-dolores,
+#sect-ultimos-medicamentos {
+  padding-top: 10px;
+}
+.icon-info {
+  font-size: 18px;
+  cursor: pointer;
 }

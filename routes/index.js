@@ -111,10 +111,11 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 		id_titular: 		1  //Dejamos un numero por defecto para primera fase, pero debe cambiarse
 	};
 
+
 	db.ma_endodoncia.insert(expediente, function(err, data){
 		console.log(err);
-		if(err) return res.send(err);
-		res.send(data);
+		if(err) return res.json(err);
+		res.json(data);
 	});
 });
 
