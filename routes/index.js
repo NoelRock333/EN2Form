@@ -158,11 +158,19 @@ router.post('/colegas', function(req, res, next) {
 	});
 });
 
-router.get('/colega/:id', function(req, res, next) {
+router.get('/colega/:id/edit', function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_colegas.findOne({ id: req.params.id }, function(err, data){
 		if(err) return res.send(err);
 		res.render('editors/colega', { user: req.session.user, colega: data });
+	});
+});
+
+router.get('/colega/:id', function(req, res, next) {
+	var db = req.app.get('db');
+	db.ca_colegas.findOne({ id: req.params.id }, function(err, data){
+		if(err) return res.json(err);
+		res.json(data);
 	});
 });
 
@@ -191,17 +199,28 @@ router.post('/pacientes', function(req, res, next) {
 	});
 });
 
-router.get('/paciente/:id', function(req, res, next) {
+router.get('/paciente/:id/edit', function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_pacientes.findOne({ id: req.params.id }, function(err, data){
-		if(err) return res.send(err);
+		if(err) return res.json(err);
 		data.fecha_nacimiento = (data.fecha_nacimiento) ? moment(data.fecha_nacimiento).format('DD/MM/YYYY').toString() : '';
 		res.render('editors/paciente', { user: req.session.user, paciente: data });
 	});
 });
 
+router.get('/paciente/:id', function(req, res, next) {
+	var db = req.app.get('db');
+	db.ca_pacientes.findOne({ id: req.params.id }, function(err, data){
+		if(err) return res.json(err);
+		res.json(data);
+	});
+});
+
 router.put('/paciente', function(req, res, next) {
 	var db = req.app.get('db');
+	req.body.nombre 			= req.body.nombre || null;
+	req.body.apellido_paterno 	= req.body.apellido_paterno || null;
+	req.body.nombre_completo 	= `${req.body.nombre} ${req.body.apellido_paterno} ${req.body.apellido_materno}`.trim();
 	req.body.fecha_nacimiento = (req.body.fecha_nacimiento) ? moment(req.body.fecha_nacimiento, 'DD/MM/YYYY').format('YYYY-MM-DD') : null;
 	db.ca_pacientes.update(req.body, function(err, data){
 		if(err) return res.json(err);

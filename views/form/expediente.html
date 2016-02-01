@@ -24,7 +24,7 @@
             <td style="width:145px"><label for="">Fecha </label></td>
             <td>
               <div class="input-group col-sm-5 js_datepicker">
-                  <input type="text" class="form-control js_fecha" name="fecha_expediente" autocomplete="off" required>
+                  <input type="text" class="form-control js_fecha" name="fecha_expediente" autocomplete="off" required v-model="fecha_expediente">
                   <div class="input-group-addon">
                       <span class="glyphicon glyphicon-th"></span>
                   </div>
@@ -32,7 +32,7 @@
             </td>
           </tr>
           <tr>
-            <td><label for="">Recomendado por </label></td>
+            <td><label for="">Recomendado por</label></td>
             <td>
               <input type="text" class="form-control" name="nombre_colega" id="nombre_colega" autocomplete="off" />
               <input type="hidden" name="id_referencia" id="id_referencia" value="">
@@ -543,23 +543,14 @@
       </div>
     </div>
     <div class="row">
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <!--<th>Fecha</th>-->
-            <th>Trabajo clínico</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <!--<td></td>-->
-            <td><textarea name="nota_evolucion" class="form-control"></textarea></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="col-sm-12">
+        <h4>Trabajo clínico</h4>
+        <textarea name="nota_evolucion" class="form-control" rows="3"></textarea>
+      </div>
     </div>
+    <br>
     <div class="row">
-      <div class="xs-12">
+      <div class="col-sm-12">
         <button type="submit" class="btn btn-success btn-lg pull-right">Guardar</button>
       </div>
     </div>

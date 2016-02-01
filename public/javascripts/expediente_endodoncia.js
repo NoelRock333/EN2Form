@@ -19,7 +19,8 @@ $(document).on("ready", function(){
 		display: 'nombre_completo',
 		val: 'id',
 		itemSelected: function(item){
-			$("#id_paciente").val($(item).data('value'));
+			//$("#id_paciente").val($(item).data('value'));
+			obtenerPaciente($(item).data('value'));
 		}
 	});
 
@@ -70,9 +71,24 @@ $(document).on("ready", function(){
 		return false;
 	});
 
+	function obtenerPaciente(id){
+		$.ajax({
+			url: '/paciente/'+id,
+			type: "GET",
+			dataType: "JSON",
+			success: function(data){
+				if(data.message){
+					bootbox.alert(data.message);
+				}
+				else{
+					llenarDatosPaciente(data);
+				}
+			}
+		})
+	}
+
 	function llenarDatosPaciente(datos)
 	{
-		console.log(datos);
 		$("#nombre_paciente").val(datos.nombre_completo);
 		$("#id_paciente").val(datos.id);
 		$("#sexo").val(datos.sexo);
@@ -82,6 +98,19 @@ $(document).on("ready", function(){
 		$("#ciudad").val(datos.ciudad);
 		$("#ocupacion").val(datos.ocupacion);
 	}
+
+	function borrarDatosPaciente(){
+		//$("#nombre_paciente").val("");
+		$("#id_paciente").val("");
+		$("#sexo").val("");
+		$("#telefono").val("");
+		$("#direccion").val("");
+		$("#colonia").val("");
+		$("#ciudad").val("");
+		$("#ocupacion").val("");
+	}
+
+	$("#nombre_paciente").on("change", borrarDatosPaciente);
 
 	$("#btn-guardar-colega").on("click", function(){
 		$.ajax({
@@ -145,4 +174,13 @@ $(document).on("ready", function(){
 		else if(e.which==38)
 			$(this).closest('tr').prev().find('td:eq('+$(this).closest('td').index()+')').find('input').focus();
 	});
+
+	$('textarea').keypress(function(event) {
+		if (event.which == 13) {
+			event.preventDefault();
+			var s = $(this).val();
+			$(this).val(s+"\n");
+		}
+	});​
+
 });
