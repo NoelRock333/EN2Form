@@ -5,26 +5,28 @@
 {% endblock %}
 
 {% block content %}
-<table class="table table-striped table-bordered" id="tabla-colegas">
+<table class="table table-striped table-bordered" id="tabla-expedientes">
 	<thead>
 		<tr>
-			<th>Nombre</th>
-			<th>Apellido paterno</th>
-			<th>Apellido materno</th>
-			<th>Especialidad</th>
+			<th>ID</th>
+			<th>Fecha</th>
+			<th>Paciente</th>
+			<th>Recomendado por</th>
+			<th>Notas</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
-		{% for colega in colegas %}
+		{% for expediente in expedientes %}
 			<tr>
-				<td><%= colega.nombre %></td>
-				<td><%= colega.apellido_paterno %></td>
-				<td><%= colega.apellido_materno %></td>
-				<td><%= colega.especialidad %></td>
+				<td><%= expediente.id %></td>
+				<td><%= expediente.fecha %></td>
+				<td><%= expediente.nombre_completo %></td>
+				<td><%= expediente.id_colega %></td>
+				<td><%= expediente.nota_evolucion %></td>
 				<td>
-					<a href="/colega/<%= colega.id %>">Editar</a>
-					<a href="#" data-id="<%= colega.id %>" data-nombre="<%= colega.nombre_completo %>" class="js_eliminar">Eliminar</a>
+					<!--<a href="/colega/<%= expediente.id %>">Editar</a>-->
+					<a href="#" data-id="<%= expediente.id %>" class="js_eliminar">Eliminar</a>
 				</td>
 			</tr>
 		{% endfor %}
@@ -36,22 +38,21 @@
 	<script type="text/javascript" src="/javascripts/jquery.dataTables.js"></script>
 	<script type="text/javascript">
 		$(document).on("ready", function(){
-			$('#tabla-colegas').DataTable();
+			$('#tabla-expedientes').DataTable();
 			$(".js_eliminar").on("click", function(e){
 				e.preventDefault();
-				var nombre_completo = $(this).data('nombre');
-				var id_colega = $(this).data('id');
+				var id_expediente = $(this).data('id');
 				bootbox.dialog({
-					title: "¿Estas seguro de que quieres eliminar este registro?",
-					message: "Colega: <b>"+nombre_completo+"</b>",
+					title: "¿Estas seguro de que quieres eliminar este registro expediente?",
+					message: "Expediente numero: <b>"+id_expediente+"</b>",
 					buttons: {
 						danger: {
 							label: "Eliminar",
 							className: "btn-danger",
 							callback: function() {
 								$.ajax({
-									url: "/colega",
-									data: { id: id_colega },
+									url: "/expediente",
+									data: { id: id_expediente },
 									type: "DELETE",
 									success: function(data) {
 										if(data.length > 0){
@@ -72,7 +73,7 @@
 						}
 					}
 				});
-			});
+			})
 		});
 	</script>
 {% endblock %}

@@ -114,3 +114,65 @@ CREATE TABLE "public"."ca_usuarios" (
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "public"."ca_usuarios" ADD PRIMARY KEY ("id");
+
+
+
+
+
+CREATE VIEW "public"."vw_endodoncia" AS 
+ SELECT ca_pacientes.nombre,
+    ca_pacientes.apellido_paterno,
+    ca_pacientes.apellido_materno,
+    ca_pacientes.nombre_completo,
+    ca_pacientes.sexo,
+    ca_pacientes.fecha_nacimiento,
+    ca_pacientes.telefono,
+    ca_pacientes.direccion,
+    ca_pacientes.colonia,
+    ca_pacientes.ciudad,
+    ca_pacientes.ocupacion,
+    ma_endodoncia.id,
+    ma_endodoncia.id_paciente,
+    ma_endodoncia.anestecia_previa,
+    ma_endodoncia.fecha_expediente,
+    ma_endodoncia.id_referencia,
+    ma_endodoncia.edad_paciente,
+    ma_endodoncia.piezas_dentales,
+    ma_endodoncia.ids_alergias,
+    ma_endodoncia.otra_alergia,
+    ma_endodoncia.enfermedad_dolores,
+    ma_endodoncia.ultimos_medicamentos,
+    ma_endodoncia.ids_problemas,
+    ma_endodoncia.ids_antecedentes_del_diente,
+    ma_endodoncia.otro_antecedentes_del_diente,
+    ma_endodoncia.ids_examen_clinico,
+    ma_endodoncia.ids_pulpa,
+    ma_endodoncia.ids_palpitacion_periapcial,
+    ma_endodoncia.ids_conducto_radicular_rx,
+    ma_endodoncia.ids_zona_periapcial_rx,
+    ma_endodoncia.ids_diagnostico_pulpar,
+    ma_endodoncia.ids_diagnostico_periapcial_presuncion,
+    ma_endodoncia.ids_interencion_indicada,
+    ma_endodoncia.conducto_unico,
+    ma_endodoncia.conducto_mesio_vestibular,
+    ma_endodoncia.conducto_disto_vestibular,
+    ma_endodoncia.conducto_distal,
+    ma_endodoncia.conducto_mesio_lingual,
+    ma_endodoncia.conducto_palatino,
+    ma_endodoncia.conducto_vestibular,
+    ma_endodoncia.conducto_mv2,
+    ma_endodoncia.conducto_disto_lingual,
+    ma_endodoncia.conducto_mesial,
+    ma_endodoncia.pronostico,
+    ma_endodoncia.nota_evolucion,
+    ma_endodoncia.id_usuario,
+    ma_endodoncia.id_clinica,
+    ma_endodoncia.id_titular,
+    ma_endodoncia.created_at,
+    ma_endodoncia.updated_at
+   FROM ca_pacientes,
+    ma_endodoncia
+  WHERE (ma_endodoncia.id_paciente = ca_pacientes.id);;
+
+ALTER TABLE "public"."vw_endodoncia" OWNER TO "postgres";
+

@@ -183,6 +183,13 @@ router.put('/colega', function(req, res, next) {
 	});
 });
 
+router.delete('/colega', function(req, res, next) {
+	var db = req.app.get('db');
+	db.ca_colegas.destroy({ id: req.body.id }, function(err, data){
+		if(err) return res.json(err);
+		res.json(data);
+	});
+});
 
 
 router.get('/pacientes', function(req, res, next) {
@@ -228,8 +235,39 @@ router.put('/paciente', function(req, res, next) {
 		res.json(data);
 	});
 });
+router.delete('/paciente', function(req, res, next) {
+	var db = req.app.get('db');
+	db.ma_endodoncia.find({ id_paciente: req.body.id }, function(err, expedientes){
+		if(err) return res.json(err);
+		if(expedientes.length > 0){
+			res.json({message: "Existen expedientes ligados a ese usuario"});
+		}
+		else {
+			db.ca_pacientes.destroy({ id: req.body.id }, function(err, data){
+				if(err) return res.json(err);
+				res.json(data);
+			});
+		}
+	});
+});
 
 
+
+router.get('/expedientes', function(req, res, next) {
+	var db = req.app.get('db');
+	db.vw_endodoncia.find({}, function(err, data){
+		if(err) return res.send(err);
+		res.render('tables/expedientes', { user: req.session.user, expedientes: data });
+	});
+});
+
+router.delete('/expediente', function(req, res, next) {
+	var db = req.app.get('db');
+	db.ma_endodoncia.destroy({ id: req.body.id }, function(err, data){
+		if(err) return res.json(err);
+		res.json(data);
+	});
+});
 
 
 router.get('/index/ejemplo', function(req, res, next) {

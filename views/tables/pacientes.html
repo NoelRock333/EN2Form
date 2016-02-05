@@ -24,6 +24,7 @@
 				<td><%= paciente.ocupacion %></td>
 				<td class="text-center">
 					<a href="/paciente/<%= paciente.id %>">Editar</a>
+					<a href="#" data-id="<%= paciente.id %>" data-nombre="<%= paciente.nombre_completo %>" class="js_eliminar">Eliminar</a>
 				</td>
 			</tr>
 		{% endfor %}
@@ -36,6 +37,46 @@
 	<script type="text/javascript">
 		$(document).on("ready", function(){
 			$('#tabla-pacientes').DataTable();
+
+			$(".js_eliminar").on("click", function(e){
+				e.preventDefault();
+				var nombre_completo = $(this).data('nombre');
+				var id_paciente = $(this).data('id');
+				bootbox.dialog({
+					title: "¿Estas seguro de que quieres eliminar este registro?",
+					message: "Paciente: <b>"+nombre_completo+"</b>",
+					buttons: {
+						danger: {
+							label: "Eliminar",
+							className: "btn-danger",
+							callback: function() {
+								$.ajax({
+									url: "/paciente",
+									data: { id: id_paciente },
+									type: "DELETE",
+									success: function(data) {
+									 	if(data.message){
+									 		bootbox.alert(data.message);
+										}
+										else if(data.length > 0){
+											location.reload();
+										}
+										else{
+											bootbox.alert("Ha ocurrido un error al intentar eliminar");
+										}
+									}
+								});
+							}
+						},
+						success: {
+							label: "Cancelar",
+							className: "btn-default",
+							callback: function() {
+							}
+						}
+					}
+				});
+			})
 		});
 	</script>
 {% endblock %}

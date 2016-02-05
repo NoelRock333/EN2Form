@@ -47,10 +47,10 @@ $(document).on("ready", function(){
 		return false;
 	});
 
-	$("#btn-limpiar-form").on("click", function(){
+	/*$("#btn-limpiar-form").on("click", function(){
 		$("#form-expediente")[0].reset();
 		$("#form-expediente [type=hidden]").val("");
-	});
+	});*/
 
 	$("#btn-guardar-paciente").on("click", function(){
 		$.ajax({
