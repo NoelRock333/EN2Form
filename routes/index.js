@@ -7,16 +7,16 @@ var passwordHash = require('password-hash');
 
 //Formulario para llenar expediente de Endodocia
 router.get('/', utils.requireAuthorization, function(req, res, next) {
-  res.render('index', { title: 'Express', user: req.session.user });
+	res.render('index', { title: 'Express', user: req.session.user });
 });
 
 router.get('/expediente', utils.requireAuthorization, function(req, res, next) {
-  res.render('expedientes/endodoncia', { title: 'Expediente', user: req.session.user });
+	res.render('expedientes/endodoncia', { title: 'Expediente', user: req.session.user });
 });
 
 //Muestra formulario de login
 router.get('/login', function(req, res, next) {
-	var hashedPassword = '';//passwordHash.generate('password123');
+	var hashedPassword = ''; // passwordHash.generate('password123');
 	res.render('form/login', { title: 'EN2Cloud login', password: hashedPassword });
 });
 
@@ -26,7 +26,7 @@ router.post('/login', function(req, res, next) {
 	if(!req.body.email) return res.redirect('/login');
 	db.ca_usuarios.findOne({ email: req.body.email }, function(err, user){
 		if(err) return res.redirect('/login');
-		if(passwordHash.verify('password123', user.password)){
+		if(passwordHash.verify(req.body.password, user.password)){
 			req.session.user = user;
 			res.redirect('/');
 		}
@@ -45,7 +45,6 @@ router.get('/logout', function(req, res, next) {
 
 /*POST Form*/
 router.post('/save', utils.requireAuthorization, function(req, res, next){
-
 	function fillArray(name){
 		var newArray = [];
 		for(var i=0;i<4;i++){
@@ -111,7 +110,6 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 		id_clinica: 		1, //Dejamos un numero por defecto para primera fase, pero debe cambiarse
 		id_titular: 		1  //Dejamos un numero por defecto para primera fase, pero debe cambiarse
 	};
-
 
 	db.ma_endodoncia.insert(expediente, function(err, data){
 		console.log(err);
