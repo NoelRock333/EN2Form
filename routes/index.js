@@ -16,7 +16,8 @@ router.get('/expediente', utils.requireAuthorization, function(req, res, next) {
 
 //Muestra formulario de login
 router.get('/login', function(req, res, next) {
-	res.render('form/login', { title: 'EN2Cloud login' });
+	var hashedPassword = '';//passwordHash.generate('password123');
+	res.render('form/login', { title: 'EN2Cloud login', password: hashedPassword });
 });
 
 //Crea sesión
@@ -153,7 +154,7 @@ router.get('/colegas', function(req, res, next) {
 
 router.post('/colegas', function(req, res, next) {
 	var db = req.app.get('db');
-	db.run("SELECT * FROM ca_colegas WHERE lower(nombre_completo) LIKE '%"+req.body.query+"%'", function(err, data){
+	db.run("SELECT * FROM ca_colegas WHERE lower(nombre_completo) LIKE '%"+req.body.query.toLowerCase()+"%'", function(err, data){
 		if(err) return res.json(err);
 		res.json(data);
 	});
@@ -201,7 +202,7 @@ router.get('/pacientes', function(req, res, next) {
 });
 router.post('/pacientes', function(req, res, next) {
 	var db = req.app.get('db');
-	db.run("SELECT * FROM ca_pacientes WHERE lower(nombre_completo) LIKE '%"+req.body.query+"%'", function(err, data){
+	db.run("SELECT * FROM ca_pacientes WHERE lower(nombre_completo) LIKE '%"+req.body.query.toLowerCase()+"%'", function(err, data){
 		if(err) return res.json(err);
 		res.json(data);
 	});
