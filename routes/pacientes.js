@@ -6,15 +6,15 @@ var utils = require('../lib/utils');
 var passwordHash = require('password-hash');
 
 
-router.get('/pacientes', function(req, res, next) {
+router.get('/pacientes', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_pacientes.find({}, function(err, data){
 		if(err) return res.send(err);
-		res.render('tables/pacientes', { user: req.session.user, pacientes: data });
+		res.render('pacientes/pacientes', { user: req.session.user, pacientes: data });
 	});
 });
 
-router.post('/pacientes', function(req, res, next) {
+router.post('/pacientes', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.run("SELECT * FROM ca_pacientes WHERE lower(nombre_completo) LIKE '%"+req.body.query.toLowerCase()+"%'", function(err, data){
 		if(err) return res.json(err);
@@ -22,16 +22,16 @@ router.post('/pacientes', function(req, res, next) {
 	});
 });
 
-router.get('/paciente/:id/edit', function(req, res, next) {
+router.get('/paciente/:id/edit', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_pacientes.findOne({ id: req.params.id }, function(err, data){
 		if(err) return res.json(err);
 		data.fecha_nacimiento = (data.fecha_nacimiento) ? moment(data.fecha_nacimiento).format('DD/MM/YYYY').toString() : '';
-		res.render('editors/paciente', { user: req.session.user, paciente: data });
+		res.render('pacientes/paciente', { user: req.session.user, paciente: data });
 	});
 });
 
-router.get('/paciente/:id', function(req, res, next) {
+router.get('/paciente/:id', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_pacientes.findOne({ id: req.params.id }, function(err, data){
 		if(err) return res.json(err);
@@ -39,7 +39,7 @@ router.get('/paciente/:id', function(req, res, next) {
 	});
 });
 
-router.put('/paciente', function(req, res, next) {
+router.put('/paciente', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	req.body.nombre 			= req.body.nombre || null;
 	req.body.apellido_paterno 	= req.body.apellido_paterno || null;
@@ -51,7 +51,7 @@ router.put('/paciente', function(req, res, next) {
 	});
 });
 
-router.delete('/paciente', function(req, res, next) {
+router.delete('/paciente', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ma_endodoncia.find({ id_paciente: req.body.id }, function(err, expedientes){
 		if(err) return res.json(err);

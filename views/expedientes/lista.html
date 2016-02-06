@@ -39,7 +39,7 @@
 	<script type="text/javascript">
 		$(document).on("ready", function(){
 			$('#tabla-expedientes').DataTable();
-			$(".js_eliminar").on("click", function(e){
+			$(".table").on("click", ".js_eliminar", function(e){
 				e.preventDefault();
 				var id_expediente = $(this).data('id');
 				bootbox.dialog({

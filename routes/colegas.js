@@ -5,15 +5,15 @@ var moment = require('moment');
 var utils = require('../lib/utils');
 var passwordHash = require('password-hash');
 
-router.get('/colegas', function(req, res, next) {
+router.get('/colegas', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_colegas.find({}, function(err, data){
 		if(err) return res.send(err);
-		res.render('tables/colegas', { user: req.session.user, colegas: data });
+		res.render('colegas/colegas', { user: req.session.user, colegas: data });
 	});
 });
 
-router.post('/colegas', function(req, res, next) {
+router.post('/colegas', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.run("SELECT * FROM ca_colegas WHERE lower(nombre_completo) LIKE '%"+req.body.query.toLowerCase()+"%'", function(err, data){
 		if(err) return res.json(err);
@@ -21,15 +21,15 @@ router.post('/colegas', function(req, res, next) {
 	});
 });
 
-router.get('/colega/:id/edit', function(req, res, next) {
+router.get('/colega/:id/edit', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_colegas.findOne({ id: req.params.id }, function(err, data){
 		if(err) return res.send(err);
-		res.render('editors/colega', { user: req.session.user, colega: data });
+		res.render('colegas/colega', { user: req.session.user, colega: data });
 	});
 });
 
-router.get('/colega/:id', function(req, res, next) {
+router.get('/colega/:id', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_colegas.findOne({ id: req.params.id }, function(err, data){
 		if(err) return res.json(err);
@@ -37,7 +37,7 @@ router.get('/colega/:id', function(req, res, next) {
 	});
 });
 
-router.put('/colega', function(req, res, next) {
+router.put('/colega', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_colegas.update(req.body, function(err, data){
 		if(err) return res.json(err);
@@ -45,7 +45,7 @@ router.put('/colega', function(req, res, next) {
 	});
 });
 
-router.delete('/colega', function(req, res, next) {
+router.delete('/colega', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_colegas.destroy({ id: req.body.id }, function(err, data){
 		if(err) return res.json(err);

@@ -11,7 +11,7 @@ router.get('/', utils.requireAuthorization, function(req, res, next) {
 });
 
 router.get('/expediente', utils.requireAuthorization, function(req, res, next) {
-  res.render('form/expediente', { title: 'Expediente', user: req.session.user });
+  res.render('expedientes/endodoncia', { title: 'Expediente', user: req.session.user });
 });
 
 //Muestra formulario de login
@@ -120,7 +120,7 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 	});
 });
 
-router.post('/nuevo_paciente', function(req, res, next){
+router.post('/nuevo_paciente', utils.requireAuthorization, function(req, res, next){
 	var db = req.app.get('db');
 	req.body.fecha_nacimiento = req.body.fecha_nacimiento ? moment(req.body.fecha_nacimiento, 'DD/MM/YYYY').format('YYYY-MM-DD') : null,
 	req.body.nombre_completo = `${req.body.nombre} ${req.body.apellido_paterno} ${req.body.apellido_materno}`.trim();
@@ -130,7 +130,7 @@ router.post('/nuevo_paciente', function(req, res, next){
 	});
 });
 
-router.post('/nuevo_colega', function(req, res, next){
+router.post('/nuevo_colega', utils.requireAuthorization, function(req, res, next){
 	var db = req.app.get('db');
 	req.body.nombre 			= req.body.nombre || null;
 	req.body.apellido_paterno 	= req.body.apellido_paterno || null;
@@ -142,32 +142,19 @@ router.post('/nuevo_colega', function(req, res, next){
 });
 
 
-router.get('/expedientes', function(req, res, next) {
+router.get('/expedientes', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.vw_endodoncia.find({}, function(err, data){
 		if(err) return res.send(err);
-		res.render('tables/expedientes', { user: req.session.user, expedientes: data });
+		res.render('expedientes/lista', { user: req.session.user, expedientes: data });
 	});
 });
 
-router.delete('/expediente', function(req, res, next) {
+router.delete('/expediente', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ma_endodoncia.destroy({ id: req.body.id }, function(err, data){
 		if(err) return res.json(err);
 		res.json(data);
-	});
-});
-
-
-router.get('/index/ejemplo', function(req, res, next) {
-  res.render('form/ejemplo', { title: 'Formulario Ejemplo' });
-});
-
-router.post('/index/save-form', function(req, res, next) {
-	var db = req.app.get('db');
-	db.ma_endodoncia.insert(req.body, function(err, data){
-		if(err) return res.send(err);
-		res.send(data);
 	});
 });
 
