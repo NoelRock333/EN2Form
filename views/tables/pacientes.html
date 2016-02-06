@@ -38,7 +38,7 @@
 		$(document).on("ready", function(){
 			$('#tabla-pacientes').DataTable();
 
-			$(".js_eliminar").on("click", function(e){
+			$(".table").on("click", ".js_eliminar", function(e){
 				e.preventDefault();
 				var nombre_completo = $(this).data('nombre');
 				var id_paciente = $(this).data('id');

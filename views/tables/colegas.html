@@ -37,7 +37,7 @@
 	<script type="text/javascript">
 		$(document).on("ready", function(){
 			$('#tabla-colegas').DataTable();
-			$(".js_eliminar").on("click", function(e){
+			$(".table").on("click", ".js_eliminar", function(e){
 				e.preventDefault();
 				var nombre_completo = $(this).data('nombre');
 				var id_colega = $(this).data('id');
