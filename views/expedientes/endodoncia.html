@@ -15,7 +15,9 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-paciente">
           Agregar paciente
         </button>
-
+        <button type="button" class="btn btn-warning js_editar hidden" data-toggle="modal" data-target="#modal-paciente-editar">
+          Editar paciente
+        </button>
       </div>
       <div class="col-sm-7">
         <table width="100%">
@@ -617,84 +619,6 @@
     </div>
   </div>
 </form>
-
-<!-- Modal -->
-<div class="modal fade" id="modal-paciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Nuevo paciente</h4>
-      </div>
-      <div class="modal-body">
-        <form action="/" id="form-paciente">
-          <label>Nombre</label>
-          <input type="text" class="form-control focus" name="nombre" required>
-          <label>Primer apellido</label>
-          <input type="text" class="form-control" name="apellido_paterno" required>
-          <label>Segundo apellido</label>
-          <input type="text" class="form-control" name="apellido_materno">
-          <label>Sexo</label>
-          <select name="sexo" class="form-control" style="width:40%">
-            <option value=""></option>
-            <option value="M">Masculino</option>
-            <option value="F">Femenino</option>
-          </select>
-          <label>Fecha de nacimiento</label>
-          <div class="input-group js_datepicker">
-              <input type="text" class="form-control js_fecha" name="fecha_nacimiento" autocomplete="off" required>
-              <div class="input-group-addon">
-                  <span class="glyphicon glyphicon-th"></span>
-              </div>
-          </div>
-          <label>Teléfono</label>
-          <input type="text" class="form-control js_telefono" name="telefono">
-          <label>Dirección</label>
-          <input type="text" class="form-control" name="direccion">
-          <label>Colonia</label>
-          <input type="text" class="form-control" name="colonia">
-          <label>Ciudad</label>
-          <input type="text" class="form-control" name="ciudad">
-          <label>Ocupación</label>
-          <input type="text" class="form-control" name="ocupacion">
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-success" id="btn-guardar-paciente">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="modal-colega" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Nuevo colega</h4>
-      </div>
-      <div class="modal-body">
-        <form action="/" id="form-colega">
-          <label>Nombre</label>
-          <input type="text" class="form-control focus" name="nombre" required>
-          <label>Primer apellido</label>
-          <input type="text" class="form-control" name="apellido_paterno" required>
-          <label>Segundo apellido</label>
-          <input type="text" class="form-control" name="apellido_materno">
-          <label>Especialidad</label>
-          <input type="text" class="form-control" name="especialidad">
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-success" id="btn-guardar-colega">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock %}
 
 {% block scripts %}

@@ -40,7 +40,9 @@ $(document).on("ready", function(){
 					$("html, body").animate({ scrollTop: 0 }, "slow");
 					$("#fecha_expediente").val("");
 					$("#piezas_dentales").tagit("removeAll");
-					$("#btn-limpiar-form").trigger('click');
+					//Limpia el formulario
+					$("#form-expediente")[0].reset();
+					$("#form-expediente [type=hidden]").val("");
 				}
 			}
 		});
@@ -98,6 +100,7 @@ $(document).on("ready", function(){
 		$("#colonia").val(datos.colonia);
 		$("#ciudad").val(datos.ciudad);
 		$("#ocupacion").val(datos.ocupacion);
+		$(".js_editar").removeClass("hidden");
 	}
 
 	function borrarDatosPaciente(){
@@ -109,6 +112,7 @@ $(document).on("ready", function(){
 		$("#colonia").val("");
 		$("#ciudad").val("");
 		$("#ocupacion").val("");
+		$(".js_editar").addClass("hidden");
 	}
 
 	$("#nombre_paciente").on("change", borrarDatosPaciente);
@@ -141,9 +145,9 @@ $(document).on("ready", function(){
 		$("#form-colega")[0].reset();
 	});
 
-	$.validate({
+	/*$.validate({
 		form: "#form-expediente"
-	});
+	});*/
 
 	$('.js_telefono').keypress(function (e){ if( e.which!=8 && e.which!=0 && e.which!=32 && e.which!=40 && e.which!=41 && (e.which<46 || e.which>57)){ return false; }});
 	$('.js_numerico').keypress(function (e){if( e.which!=8 && e.which!=0 && (e.which<46 || e.which>57)){return false;}});
@@ -182,6 +186,37 @@ $(document).on("ready", function(){
 			var s = $(this).val();
 			$(this).val(s+'\n');
 		}
+	});
+
+	//Código para modal de editar paciente
+	$("body").on("click", ".js_editar", function(){
+		$.ajax({
+			url: "/paciente/"+$("#id_paciente").val()+"/edit",
+			type: "GET",
+			dataType: "HTML",
+			success: function(data) {
+				$("#modal-paciente-editar .modal-body").html(data);
+			}
+		})
+	});
+	$("body").on("click", "#modal-paciente-editar .btn-editar", function(){
+		$form = $(".form-paciente");
+		$.ajax({
+			url: $form.attr("action"),
+			data: $form.serialize(),
+			type: "PUT",
+			dataType: "JSON",
+			success: function(data){
+				if(data.message){
+					bootbox.alert(data.message);
+				}
+				else {
+					bootbox.alert("Paciente editado correctamente");
+					$('#modal-paciente-editar').modal('hide');
+					llenarDatosPaciente(data);
+				}
+			}
+		});
 	});
 
 });

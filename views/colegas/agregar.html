@@ -1,0 +1,27 @@
+<!-- Modal -->
+<div class="modal fade" id="modal-colega" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nuevo colega</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/" id="form-colega">
+          <label>Nombre</label>
+          <input type="text" class="form-control focus" name="nombre" required>
+          <label>Primer apellido</label>
+          <input type="text" class="form-control" name="apellido_paterno" required>
+          <label>Segundo apellido</label>
+          <input type="text" class="form-control" name="apellido_materno">
+          <label>Especialidad</label>
+          <input type="text" class="form-control" name="especialidad">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-success" id="btn-guardar-colega">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

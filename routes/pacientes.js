@@ -5,7 +5,6 @@ var moment = require('moment');
 var utils = require('../lib/utils');
 var passwordHash = require('password-hash');
 
-
 router.get('/pacientes', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_pacientes.find({}, function(err, data){
@@ -27,7 +26,7 @@ router.get('/paciente/:id/edit', utils.requireAuthorization, function(req, res, 
 	db.ca_pacientes.findOne({ id: req.params.id }, function(err, data){
 		if(err) return res.json(err);
 		data.fecha_nacimiento = (data.fecha_nacimiento) ? moment(data.fecha_nacimiento).format('DD/MM/YYYY').toString() : '';
-		res.render('pacientes/paciente', { user: req.session.user, paciente: data });
+		res.render('pacientes/editar', { user: req.session.user, paciente: data });
 	});
 });
 

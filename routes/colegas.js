@@ -21,11 +21,15 @@ router.post('/colegas', utils.requireAuthorization, function(req, res, next) {
 	});
 });
 
+/*router.get('/colega', utils.requireAuthorization, function(req, res, next) {
+	res.render('colegas/agregar');
+});*/
+
 router.get('/colega/:id/edit', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
 	db.ca_colegas.findOne({ id: req.params.id }, function(err, data){
 		if(err) return res.send(err);
-		res.render('colegas/colega', { user: req.session.user, colega: data });
+		res.render('colegas/editar', { user: req.session.user, colega: data });
 	});
 });
 

@@ -23,7 +23,7 @@
 				<td><%= paciente.apellido_materno %></td>
 				<td><%= paciente.ocupacion %></td>
 				<td class="text-center">
-					<a href="/paciente/<%= paciente.id %>/edit">Editar</a>
+					<a href="/paciente/<%= paciente.id %>/edit" class="js_editar">Editar</a>
 					<a href="#" data-id="<%= paciente.id %>" data-nombre="<%= paciente.nombre_completo %>" class="js_eliminar">Eliminar</a>
 				</td>
 			</tr>
@@ -76,7 +76,41 @@
 						}
 					}
 				});
-			})
+			});
+
+			//Código para modal de editar paciente
+			$("body").on("click", ".js_editar", function(e){
+				e.preventDefault();
+				var url = $(this).attr("href");
+				$("#modal-paciente-editar").modal("show");
+				$.ajax({
+					url: url,
+					type: "GET",
+					dataType: "HTML",
+					success: function(data) {
+						$("#modal-paciente-editar .modal-body").html(data);
+					}
+				});
+			});
+			$("body").on("click", "#modal-paciente-editar .btn-editar", function(){
+				$form = $(".form-paciente");
+				$.ajax({
+					url: $form.attr("action"),
+					data: $form.serialize(),
+					type: "PUT",
+					dataType: "JSON",
+					success: function(data){
+						if(data.message){
+							bootbox.alert(data.message);
+							$("#modal-paciente-editar").modal("hide");
+						}
+						else {
+							bootbox.alert("Paciente editado correctamente");
+							$("#modal-paciente-editar").modal("hide");
+						}
+					}
+				});
+			});
 		});
 	</script>
 {% endblock %}

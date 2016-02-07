@@ -1,0 +1,33 @@
+<form action="/paciente" class="form-paciente">
+	<input type="hidden" name="id" value="<%=paciente.id%>">
+	<label>Nombre</label>
+	<input type="text" class="form-control focus" name="nombre" required value="<%=paciente.nombre%>">
+	<label>Primer apellido</label>
+	<input type="text" class="form-control" name="apellido_paterno" required value="<%=paciente.apellido_paterno%>">
+	<label>Segundo apellido</label>
+	<input type="text" class="form-control" name="apellido_materno" value="<%=paciente.apellido_materno%>">
+	<label>Sexo</label>
+	<select name="sexo" class="form-control js_sexo" style="width:40%">
+		<option value=""></option>
+		<option value="M" {% if paciente.sexo == 'M' %}selected{%endif%}>Masculino</option>
+		<option value="F" {% if paciente.sexo == 'F' %}selected{%endif%}>Femenino</option>
+	</select>
+	<label>Fecha de nacimiento</label>
+	<div class="input-group js_datepicker">
+		<input type="text" class="form-control js_fecha" name="fecha_nacimiento" autocomplete="off" required value="<%=paciente.fecha_nacimiento%>">
+		<div class="input-group-addon">
+			<span class="glyphicon glyphicon-th"></span>
+		</div>
+	</div>
+	<label>Teléfono</label>
+	<input type="text" class="form-control js_telefono" name="telefono" value="<%=paciente.telefono%>">
+	<label>Dirección</label>
+	<input type="text" class="form-control" name="direccion" value="<%=paciente.direccion%>">
+	<label>Colonia</label>
+	<input type="text" class="form-control" name="colonia" value="<%=paciente.ciudad%>">
+	<label>Ciudad</label>
+	<input type="text" class="form-control" name="ciudad" value="<%=paciente.ciudad%>">
+	<label>Ocupación</label>
+	<input type="text" class="form-control" name="ocupacion" value="<%=paciente.ocupacion%>">
+	<br>
+</form>
