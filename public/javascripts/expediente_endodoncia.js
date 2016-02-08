@@ -25,29 +25,53 @@ $(document).on("ready", function(){
 	});
 
 	$("#form-expediente").on("submit", function(){
+		var extras = "";
+		if($(".nota-extra").length > 0) {
+			guardarExpediente("", false);
+			$(".nota-extra").each(function(index, obj){ 
+				var fecha = $(obj).find(".js_fecha").val();
+				var nota = $(obj).find("textarea").val();
+				extras = "&fecha_extra="+fecha+"&nota_extra="+nota;
+				if(index == $(".nota-extra").length-1)
+					guardarExpediente(extras, true);
+				else
+					guardarExpediente(extras, false);
+			});
+		}
+		else {
+			guardarExpediente(extras, true);
+		}
+		
+		return false;
+	});
+
+	function guardarExpediente(extras, limpia) {
 		$.ajax({
 			url: "/save",
 			type: "POST",
 			dataType: "JSON",
-			data: $("#form-expediente").serialize(),
+			async: false,
+			data: $("#form-expediente").serialize()+extras,
 			success: function(data){
 				console.log(data);
 				if(data.message){
 					bootbox.alert(data.message);
 				}
 				else{
-					bootbox.alert("Expediente guardado correctamente");
-					$("html, body").animate({ scrollTop: 0 }, "slow");
-					$("#fecha_expediente").val("");
-					$("#piezas_dentales").tagit("removeAll");
-					//Limpia el formulario
-					$("#form-expediente")[0].reset();
-					$("#form-expediente [type=hidden]").val("");
+					if(limpia){
+						bootbox.alert("Expediente guardado correctamente");
+						$("html, body").animate({ scrollTop: 0 }, "slow");
+						$("#fecha_expediente").val("");
+						$("#piezas_dentales").tagit("removeAll");
+						//Limpia el formulario
+						$("#form-expediente")[0].reset();
+						$("#form-expediente [type=hidden]").val("");
+						$(".nota-extra").remove();
+					}
 				}
 			}
 		});
-		return false;
-	});
+	}
 
 	/*$("#btn-limpiar-form").on("click", function(){
 		$("#form-expediente")[0].reset();
@@ -151,7 +175,7 @@ $(document).on("ready", function(){
 
 	$('.js_telefono').keypress(function (e){ if( e.which!=8 && e.which!=0 && e.which!=32 && e.which!=40 && e.which!=41 && (e.which<46 || e.which>57)){ return false; }});
 	$('.js_numerico').keypress(function (e){if( e.which!=8 && e.which!=0 && (e.which<46 || e.which>57)){return false;}});
-	$('.js_fecha').keypress(function (e){if( e.which!=47 && (e.which<46 || e.which>57)){return false;}});
+	$('body').on('keypress','.js_fecha', function (e){if( e.which!=47 && (e.which<46 || e.which>57)){return false;}});
 	//Solo acepta numeros
 	$('.ui-widget-content.ui-autocomplete-input').keypress(function (e){if( e.which!=8 && e.which!=0 && (e.which<46 || e.which>57)){return false;}});
 
@@ -180,12 +204,29 @@ $(document).on("ready", function(){
 			$(this).closest('tr').prev().find('td:eq('+$(this).closest('td').index()+')').find('input').focus();
 	});
 
-	$('textarea').on('keypress', function(e){
+	$('body').on('keypress', 'textarea', function(e){
 		if(e.which == 13){
 			e.preventDefault();
 			var s = $(this).val();
 			$(this).val(s+'\n');
 		}
+	});
+
+	new Vue({
+		el: '#form-expediente',
+		data: {
+			fecha_expediente: ''
+		}
+	});
+
+	$("body").on("click",".js_elimina_nota", function(){
+		$(this).parents("tr").remove();
+	});
+
+	$("#btn-nueva-nota").on("click", function(){
+		var nota = '<tr class="nota-extra"><td><input type="text" class="js_fecha form-control"><span class="js_elimina_nota">Eliminar</span></td>';
+		nota +='<td><textarea class="form-control" rows="4"></textarea></td></tr>';
+		$("#tabla-notas").append(nota);
 	});
 
 	//Código para modal de editar paciente

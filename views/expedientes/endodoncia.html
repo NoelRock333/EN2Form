@@ -608,7 +608,21 @@
     <div class="row">
       <div class="col-sm-12">
         <h4>Trabajo clínico</h4>
-        <textarea name="nota_evolucion" class="form-control" rows="4"></textarea>
+        <div class="btn btn-primary" id="btn-nueva-nota">Agregar nota</div>
+        <table class="table table-striped table-bordered" id="tabla-notas">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-center">
+              <td width="150px"><label>{{fecha_expediente}}</label></td>
+              <td><textarea name="nota_evolucion" class="form-control" rows="4"></textarea></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <br>

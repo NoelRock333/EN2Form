@@ -64,3 +64,10 @@ a {
   font-size: 18px;
   cursor: pointer;
 }
+.js_elimina_nota {
+  cursor: pointer;
+  color: #f00;
+}
+.js_elimina_nota:hover {
+  text-decoration: underline;
+}
