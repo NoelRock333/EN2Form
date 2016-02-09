@@ -68,6 +68,12 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 	}
 
 	var db = req.app.get('db');
+
+	if(req.body.fecha_extra && req.body.nota_extra) {
+		req.body.fecha_expediente 	= req.body.fecha_extra;
+		req.body.nota_evolucion 	= req.body.nota_extra;
+	}
+
 	var expediente = {
 		id_paciente: 		req.body.id_paciente,
 		anestecia_previa: 	req.body.anestecia_previa || false,
