@@ -1,0 +1,642 @@
+{% extends '../layout.html' %}
+{% block styles %}
+  <link rel="stylesheet" href="/stylesheets/jquery.tagit.css">
+  <link rel="stylesheet" href="/stylesheets/tagit.ui-zendesk.css">
+{% endblock %}
+{% block content %}
+<form action="/save" method="POST" id="form-expediente">
+	<input type="hidden" name="id_expediente" value="<%= expediente.id %>">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <img src="" id="logo" alt="" />
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-colega">
+          Agregar colega
+        </button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-paciente">
+          Agregar paciente
+        </button>
+        <button type="button" class="btn btn-warning js_editar" data-toggle="modal" data-target="#modal-paciente-editar">
+          Editar paciente
+        </button>
+      </div>
+      <div class="col-sm-7">
+        <table width="100%">
+          <tr>
+            <td style="width:145px"><label for="">Fecha </label></td>
+            <td>
+              <div class="input-group col-sm-5 js_datepicker">
+                  <input type="text" class="form-control js_fecha" name="fecha_expediente" autocomplete="off" required v-model="fecha_expediente" value="<%= expediente.fecha_expediente %>">
+                  <div class="input-group-addon">
+                      <span class="glyphicon glyphicon-th"></span>
+                  </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="">Recomendado por</label></td>
+            <td>
+              <input type="text" class="form-control" name="nombre_colega" id="nombre_colega" autocomplete="off" value="<%= colega.nombre_completo %>"/>
+              <input type="hidden" name="id_referencia" id="id_referencia" value="<%= expediente.id_colega %>">
+            </td>
+          </tr>
+        </table>
+      </div> <!-- Primera seccion-->
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3>FICHA DE ENDODONCIA</h3>
+      </div>
+    </div>
+    <div class="row" id="sect-paciente-1">
+      <div class="col-sm-6">
+        <label for="">Paciente</label>
+        <input type="text" class="form-control" name="nombre_paciente" id="nombre_paciente" autocomplete="off" required value="<%= paciente.nombre_completo %>"/>
+        <input type="hidden" name="id_paciente" id="id_paciente" value="<%= expediente.id_paciente %>" />
+      </div>
+      <div class="col-sm-2">
+        <label for="">Sexo</label>
+        <select class="form-control" name="sexo" id="sexo" disabled="disabled" />
+          <option value=""></option>
+          <option value="M" {% if paciente.sexo == 'M' %}selected{%endif%}>Masculino</option>
+          <option value="F" {% if paciente.sexo == 'F' %}selected{%endif%}>Femenino</option>
+        </select>
+      </div>
+      <div class="col-sm-1">
+        <label for="">Edad</label>
+        <input type="text" class="form-control js_numerico" name="edad_paciente" maxlength="3" value="<%= expediente.edad_paciente %>"/>
+      </div>
+      <div class="col-sm-3">
+        <label for="">Teléfono</label>
+        <input type="text" class="form-control" name="telefono" id="telefono" disabled="disabled" value="<%= paciente.telefono %>">
+      </div>
+    </div>
+    <div class="row" id="sect-paciente-2">
+      <div class="col-sm-4">
+        <label for="">Dirección</label>
+        <input type="text" class="form-control" name="direccion" id="direccion" disabled="disabled" value="<%= paciente.direccion %>">
+      </div>
+      <div class="col-sm-4">
+        <label for="">Colonia</label>
+        <input type="text" class="form-control" name="colonia" id="colonia" disabled="disabled" value="<%= paciente.colonia %>">
+      </div>
+      <div class="col-sm-4">
+        <label for="">Ciudad</label>
+        <input type="text" class="form-control" name="ciudad" id="ciudad" disabled="disabled" value="<%= paciente.ciudad %>">
+      </div>
+    </div>
+    <div class="row" id="sect-paciente-3">
+      <div class="col-sm-4">
+        <label for="">Ocupación</label>
+        <input type="text" class="form-control" name="ocupacion" id="ocupacion" disabled="disabled" value="<%= paciente.ocupacion %>">
+      </div>
+      <div class="col-sm-4">
+        <label for="">Dientes</label>
+        <input type="text" class="form-control" name="piezas_dentales" id="piezas_dentales" value="<%= expediente.piezas_dentales %>">
+      </div>
+      <div class="col-sm-4">
+        <label for="">Ha sido anesteciado antes?</label>
+        <select class="form-control" name="anestecia_previa">
+          <option value=""></option>
+          <option value="true" {% if expediente.anestecia_previa == true %}selected{%endif%}>SI</option>
+          <option value="false" {% if expediente.anestecia_previa == false %}selected{%endif%}>NO</option>
+        </select>
+      </div>
+    </div><!--Ficha endodoncia-->
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Alergias</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <input type="checkbox" name="alergias" value="1" {% for x in expediente.ids_alergias %}{% if x == '1' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Anestesia</span>
+        <input type="checkbox" name="alergias" value="2" {% for x in expediente.ids_alergias %}{% if x == '2' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Penicilina</span>
+        <input type="checkbox" name="alergias" value="3" {% for x in expediente.ids_alergias %}{% if x == '3' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Latex</span>
+        <input type="checkbox" name="alergias" value="4" {% for x in expediente.ids_alergias %}{% if x == '4' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Yodo</span>
+        <input type="checkbox" name="alergias" value="5" {% for x in expediente.ids_alergias %}{% if x == '5' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Cloro</span>
+        Otro: <input type="text" class="form-control" name="otra_alergia" value="<%= expediente.otra_alergia %>">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12" id="sect-enfermedad-dolores">
+        <label for="">¿Presenta algún tipo de enfermedad y/o dolor en este momento?:</label>
+        <input type="text" class="form-control" name="enfermedad_dolores" value="<%= expediente.enfermedad_dolores %>">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12" id="sect-ultimos-medicamentos">
+        <label for="">¿Que medicamentos ha tomado en las últimas 2 semanas?:</label>
+        <input type="text" class="form-control" name="ultimos_medicamentos" value="<%= expediente.ultimos_medicamentos %>">
+      </div>
+    </div> <!--Alergias-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Aparatos y sistemas</h3>
+        <i>(Señale el tipo de enfermedad, que presenta de las siguientes, aún cuendo estas no sean recientes)</i>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="problema">
+          <label for="">Problemas digestivos</label>
+          <div class="opciones">
+            <input type="checkbox" name="problemas" value="1" {% for x in expediente.ids_problemas %}{% if x == '1' %}checked{% endif %}{% endfor %}>
+            <i class="glyphicon glyphicon-question-sign icon-info"></i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas Respiratorios</label>
+          <div class="opciones">
+            <input type="checkbox" name="problemas" value="2" {% for x in expediente.ids_problemas %}{% if x == '2' %}checked{% endif %}{% endfor %}>
+            <i class="glyphicon glyphicon-question-sign icon-info"></i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas del Corazón</label>
+          <div class="opciones">
+            <input type="checkbox" name="problemas" value="3" {% for x in expediente.ids_problemas %}{% if x == '3' %}checked{% endif %}{% endfor %}>
+            <i class="glyphicon glyphicon-question-sign icon-info"></i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas Hermáticos</label>
+          <div class="opciones">
+            <input type="checkbox" name="problemas" value="4" {% for x in expediente.ids_problemas %}{% if x == '4' %}checked{% endif %}{% endfor %}>
+            <i class="glyphicon glyphicon-question-sign icon-info"></i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas Genilu-Urinario</label>
+          <div class="opciones">
+            <input type="checkbox" name="problemas" value="5" {% for x in expediente.ids_problemas %}{% if x == '5' %}checked{% endif %}{% endfor %}>
+            <i class="glyphicon glyphicon-question-sign icon-info"></i>
+          </div>
+        </div>
+        <div class="problema">
+          <label for="">Problemas Endocrinos</label>
+          <div class="opciones">
+            <input type="checkbox" name="problemas" value="6" {% for x in expediente.ids_problemas %}{% if x == '6' %}checked{% endif %}{% endfor %}>
+            <i class="glyphicon glyphicon-question-sign icon-info"></i>
+          </div>
+        </div>
+      </div>
+    </div> <!--Aparatos y sitemas-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Antecedentes del diente a tratar (interrogatorio)</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="1" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '1' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Caries</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="2" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '2' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Amalgama</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="3" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '3' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Traumatismo</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="4" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '4' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Corona</span> 
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="5" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '5' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Resina</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="6" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '6' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Curación</span>
+      </div>
+
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="7" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '7' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Incrustación</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="8" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '8' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Provisional</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="9" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '9' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Ninguna</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="antecendentes_diente" value="10" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '10' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Retratamiento</span>
+      </div>
+      <div class="col-sm-4">
+        <input type="checkbox" name="antecendentes_diente" value="11" {% for x in expediente.ids_antecedentes_del_diente %}{% if x == '11' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Otro</span>
+        <input type="text" class="form-control" name="otro_antecedente" value="<%= expediente.otro_antecedentes_del_diente %>">
+      </div>
+    </div> <!--Antecedentes del tiente a tratar (interrogatorio)-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Examen clínico (síntomas)</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="1" {% for x in expediente.ids_examen_clinico %}{% if x == '1' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Frio</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="2" {% for x in expediente.ids_examen_clinico %}{% if x == '2' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Calor</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="3" {% for x in expediente.ids_examen_clinico %}{% if x == '3' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Masticación</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="4" {% for x in expediente.ids_examen_clinico %}{% if x == '4' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Persistente</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="5" {% for x in expediente.ids_examen_clinico %}{% if x == '5' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Fugaz</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="6" {% for x in expediente.ids_examen_clinico %}{% if x == '6' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Nocturno</span>
+      </div>
+
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="7" {% for x in expediente.ids_examen_clinico %}{% if x == '7' %}checked{% endif %}{% endfor %}>  
+        <span class="check-label">Localización</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="8" {% for x in expediente.ids_examen_clinico %}{% if x == '8' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Irradiado</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="9" {% for x in expediente.ids_examen_clinico %}{% if x == '9' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Provocado</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="10" {% for x in expediente.ids_examen_clinico %}{% if x == '10' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Espontaneo</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="11" {% for x in expediente.ids_examen_clinico %}{% if x == '11' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Ninguno</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="examen_clinico" value="12" {% for x in expediente.ids_examen_clinico %}{% if x == '12' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Punsatil</span>
+      </div>
+    </div> <!--Examen clínico (síntomas)-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Pulpa</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="pulpa" value="1" {% for x in expediente.ids_pulpa %}{% if x == '1' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Integra</span>
+      </div>
+        <div class="col-sm-2">
+        <input type="checkbox" name="pulpa" value="2" {% for x in expediente.ids_pulpa %}{% if x == '2' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Expuesta</span>
+      </div>
+        <div class="col-sm-2">
+        <input type="checkbox" name="pulpa" value="3" {% for x in expediente.ids_pulpa %}{% if x == '3' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Necrotica</span>
+      </div>
+        <div class="col-sm-2">
+        <input type="checkbox" name="pulpa" value="4" {% for x in expediente.ids_pulpa %}{% if x == '4' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Sin pulpa</span>
+      </div>
+        <div class="col-sm-2">
+        <input type="checkbox" name="pulpa" value="5" {% for x in expediente.ids_pulpa %}{% if x == '5' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Obturado</span>
+      </div>
+    </div> <!--Pulpa-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Palpación periapical</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical" value="1" {% for x in expediente.ids_palpitacion_periapcial %}{% if x == '1' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Normal</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical" value="2" {% for x in expediente.ids_palpitacion_periapcial %}{% if x == '2' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Fistula</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical" value="3" {% for x in expediente.ids_palpitacion_periapcial %}{% if x == '3' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Tumefación difusa</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical" value="4" {% for x in expediente.ids_palpitacion_periapcial %}{% if x == '4' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Tumefacción localizada</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="palpacion_periapical" value="5" {% for x in expediente.ids_palpitacion_periapcial %}{% if x == '5' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Absceso</span>
+      </div>
+    </div> <!--Palpacion-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Conducto radicular RX</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular" value="1" {% for x in expediente.ids_conducto_radicular_rx %}{% if x == '1' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Normal</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular" value="2" {% for x in expediente.ids_conducto_radicular_rx %}{% if x == '2' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Amplio</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular" value="3" {% for x in expediente.ids_conducto_radicular_rx %}{% if x == '3' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Estrecho</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular" value="4" {% for x in expediente.ids_conducto_radicular_rx %}{% if x == '4' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Calcificado</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular" value="5" {% for x in expediente.ids_conducto_radicular_rx %}{% if x == '5' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Preparado</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="conducto_radicular" value="6" {% for x in expediente.ids_conducto_radicular_rx %}{% if x == '6' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Obturado</span>
+      </div>
+    </div><!--conducto radicular-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Zona periapical RX</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="zona_periapical" value="1" {% for x in expediente.ids_zona_periapcial_rx %}{% if x == '1' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Normal</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="zona_periapical" value="2" {% for x in expediente.ids_zona_periapcial_rx %}{% if x == '2' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Ensanchado</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="zona_periapical" value="3" {% for x in expediente.ids_zona_periapcial_rx %}{% if x == '3' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Lesión apical circunscrita</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="zona_periapical" value="4" {% for x in expediente.ids_zona_periapcial_rx %}{% if x == '4' %}checked{% endif %}{% endfor %}>
+        <span class="check-label">Lesión apical difusa</span>
+      </div>
+    </div><!--Zona periapical RX-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Diagnóstico pulpal</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_pulpar" value="1" {% for x in expediente.ids_diagnostico_pulpar %}{% if x == '1' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Pulpitis reversible</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_pulpar" value="2" {% for x in expediente.ids_diagnostico_pulpar %}{% if x == '2' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Pulpitis irreversible </span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_pulpar" value="3" {% for x in expediente.ids_diagnostico_pulpar %}{% if x == '3' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Necrosis pulpar</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_pulpar" value="4" {% for x in expediente.ids_diagnostico_pulpar %}{% if x == '4' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Sin pulpa</span>
+      </div>
+    </div><!--Diagnóstico Pulpal-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Diagnóstico periapical de presunción</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion" value="1" {% for x in expediente.ids_diagnostico_periapcial_presuncion %}{% if x == '1' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">PAA</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion" value="2" {% for x in expediente.ids_diagnostico_periapcial_presuncion %}{% if x == '2' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">PACro</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion" value="3" {% for x in expediente.ids_diagnostico_periapcial_presuncion %}{% if x == '3' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">PACro.SUP</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion" value="4" {% for x in expediente.ids_diagnostico_periapcial_presuncion %}{% if x == '4' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Abs. Ag</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="diagnostico_periapical_presuncion" value="5" {% for x in expediente.ids_diagnostico_periapcial_presuncion %}{% if x == '5' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Abs. Fénix</span>
+      </div>
+    </div><!--Diagnóstico periapical de presunción-->
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Interección indicada</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada" value="1" {% for x in expediente.ids_interencion_indicada %}{% if x == '1' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Necropulpectomia</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada" value="2" {% for x in expediente.ids_interencion_indicada %}{% if x == '2' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Biopulpectomia</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada" value="3" {% for x in expediente.ids_interencion_indicada %}{% if x == '3' %}checked{% endif %}{% endfor %}>  
+        <span class="check-label">Repetición</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada" value="4" {% for x in expediente.ids_interencion_indicada %}{% if x == '4' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">TX. Quirurgico</span>
+      </div>
+      <div class="col-sm-2">
+        <input type="checkbox" name="intereccion_indicada" value="5" {% for x in expediente.ids_interencion_indicada %}{% if x == '5' %}checked{% endif %}{% endfor %}> 
+        <span class="check-label">Extracción</span>
+      </div>
+    </div><!--Interección indicada-->
+    <hr>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h3>CONTROL DEL TRATAMIENTO</h3>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-striped table-bordered table-condensed" id="tabla-ctrl-tratamiento">
+            <thead>
+              <tr>
+                <th>Conducto</th>
+                <th>Conductometría real</th>
+                <th>Relación</th>
+                <th>Instrumento final apical</th>
+                <th>Se desopturo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><label>único</label></td>
+                <td><input type="text" class="form-control" name="conducto_unico_1" value="<%= expediente.conducto_unico[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_unico_2" value="<%= expediente.conducto_unico[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_unico_3" value="<%= expediente.conducto_unico[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_unico_4" value="<%= expediente.conducto_unico[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>Mesio vestibular</label></td>
+                <td><input type="text" class="form-control" name="conducto_mesio_vestibular_1" value="<%= expediente.conducto_mesio_vestibular[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesio_vestibular_2" value="<%= expediente.conducto_mesio_vestibular[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesio_vestibular_3" value="<%= expediente.conducto_mesio_vestibular[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesio_vestibular_4" value="<%= expediente.conducto_mesio_vestibular[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>Disto vestibular</label></td>
+                <td><input type="text" class="form-control" name="conducto_disto_vestibular_1" value="<%= expediente.conducto_disto_vestibular[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_disto_vestibular_2" value="<%= expediente.conducto_disto_vestibular[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_disto_vestibular_3" value="<%= expediente.conducto_disto_vestibular[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_disto_vestibular_4" value="<%= expediente.conducto_disto_vestibular[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>Distal</label></td>
+                <td><input type="text" class="form-control" name="conducto_distal_1" value="<%= expediente.conducto_distal[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_distal_2" value="<%= expediente.conducto_distal[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_distal_3" value="<%= expediente.conducto_distal[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_distal_4" value="<%= expediente.conducto_distal[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>Mesio lingual</label></td>
+                <td><input type="text" class="form-control" name="conducto_mesio_lingual_1" value="<%= expediente.conducto_mesio_lingual[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesio_lingual_2" value="<%= expediente.conducto_mesio_lingual[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesio_lingual_3" value="<%= expediente.conducto_mesio_lingual[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesio_lingual_4" value="<%= expediente.conducto_mesio_lingual[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>Palatino</label></td>
+                <td><input type="text" class="form-control" name="conducto_palatino_1" value="<%= expediente.conducto_palatino[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_palatino_2" value="<%= expediente.conducto_palatino[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_palatino_3" value="<%= expediente.conducto_palatino[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_palatino_4" value="<%= expediente.conducto_palatino[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>Vestibular</label></td>
+                <td><input type="text" class="form-control" name="conducto_vestibular_1" value="<%= expediente.conducto_vestibular[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_vestibular_2" value="<%= expediente.conducto_vestibular[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_vestibular_3" value="<%= expediente.conducto_vestibular[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_vestibular_4" value="<%= expediente.conducto_vestibular[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>MV2</label></td>
+                <td><input type="text" class="form-control" name="conducto_MV2_1" value="<%= expediente.conducto_mv2[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_MV2_2" value="<%= expediente.conducto_mv2[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_MV2_3" value="<%= expediente.conducto_mv2[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_MV2_4" value="<%= expediente.conducto_mv2[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>Disto lingual</label></td>
+                <td><input type="text" class="form-control" name="conducto_disto_lingual_1" value="<%= expediente.conducto_disto_lingual[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_disto_lingual_2" value="<%= expediente.conducto_disto_lingual[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_disto_lingual_3" value="<%= expediente.conducto_disto_lingual[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_disto_lingual_4" value="<%= expediente.conducto_disto_lingual[3] %>"></td>
+              </tr>
+              <tr>
+                <td><label>Mesial</label></td>
+                <td><input type="text" class="form-control" name="conducto_mesial_1" value="<%= expediente.conducto_mesial[0] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesial_2" value="<%= expediente.conducto_mesial[1] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesial_3" value="<%= expediente.conducto_mesial[2] %>"></td>
+                <td><input type="text" class="form-control" name="conducto_mesial_4" value="<%= expediente.conducto_mesial[3] %>"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+        <label>Pronóstico</label>
+        </div>
+        <div class="col-sm-4">
+          <input type="radio" name="pronostico" value="true" {% if expediente.pronostico == true %}checked{%endif%}> Favorable
+        </div>
+        <div class="col-sm-4">
+          <input type="radio" name="pronostico" value="false" {% if expediente.pronostico == false %}checked{%endif%}> Reservado
+        </div>
+      </div>
+      <br>
+      <!--<div class="row">
+        <div class="col-sm-4">
+          <p class="text-justify">Si me comprometo a restaurar mi tratamiento de endodoncia antes de 20 días. El doctor me explicó claramente que puede regresar el dolor si se contamina ya que colocó una <b>curación temporal</b> (algodón y cavit) que no durará mucho y si esto sucede hay que repetir la endoconcia pagando de nuevo por el tratamiento.</p>  
+        </div>
+        <div class="col-sm-4">
+          
+        </div>
+        <div class="col-sm-4">
+          <p class="text-justify">No me comprometo a restaurar mi tratamiento anntes de 20 días. El doctor me explicó claramente que colocó una <b>curación temporal</b> (algodón y cavit) y que ésta se puede caer, contaminándose mi tratamiento. Asumo el riesgo al no restaurarlo oportunamente.</p>
+        </div>
+      </div>-->
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>NOTAS DE EVOLUCIÓN</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>Trabajo clínico</h4>
+        <table class="table table-striped table-bordered" id="tabla-notas">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Nota</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-center">
+              <td width="150px"><label>{{fecha_expediente}}</label></td>
+              <td><textarea name="nota_evolucion" class="form-control" rows="4"><%= expediente.nota_evolucion %></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-success btn-lg pull-right">Guardar</button>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/javascripts/tag-it.js"></script>
+  <script type="text/javascript" src="/javascripts/expediente_endodoncia.js"></script>
+{% endblock %}

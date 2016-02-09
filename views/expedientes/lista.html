@@ -20,12 +20,12 @@
 		{% for expediente in expedientes %}
 			<tr>
 				<td><%= expediente.id %></td>
-				<td><%= expediente.fecha %></td>
+				<td><%= expediente.fecha_expediente %></td>
 				<td><%= expediente.nombre_completo %></td>
 				<td><%= expediente.id_colega %></td>
 				<td><%= expediente.nota_evolucion %></td>
 				<td>
-					<!--<a href="/colega/<%= expediente.id %>">Editar</a>-->
+					<a href="/expediente/<%= expediente.id %>/edit">Editar</a>
 					<a href="#" data-id="<%= expediente.id %>" class="js_eliminar">Eliminar</a>
 				</td>
 			</tr>

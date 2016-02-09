@@ -111,11 +111,21 @@ router.post('/save', utils.requireAuthorization, function(req, res, next){
 		id_titular: 		1  //Dejamos un numero por defecto para primera fase, pero debe cambiarse
 	};
 
-	db.ma_endodoncia.insert(expediente, function(err, data){
-		console.log(err);
-		if(err) return res.json(err);
-		res.json(data);
-	});
+	if(!req.body.id_expediente){
+		db.ma_endodoncia.insert(expediente, function(err, data){
+			console.log(err);
+			if(err) return res.json(err);
+			res.json(data);
+		});
+	}
+	else {
+		expediente.id = req.body.id_expediente;
+		db.ma_endodoncia.update(expediente, function(err, data){
+			console.log(err);
+			if(err) return res.json(err);
+			res.json(data);
+		});
+	}
 });
 
 router.post('/nuevo_paciente', utils.requireAuthorization, function(req, res, next){
@@ -144,6 +154,9 @@ router.get('/expedientes', utils.requireAuthorization, function(req, res, next) 
 	var db = req.app.get('db');
 	db.vw_endodoncia.find({}, function(err, data){
 		if(err) return res.send(err);
+		/*expedientes = data.forEach(function(expediente){
+			expediente.fecha_expediente = (expediente.fecha_expediente) ? moment(expediente.fecha_expediente).format('DD/MM/YYYY').toString() : '';
+		});*/
 		res.render('expedientes/lista', { user: req.session.user, expedientes: data });
 	});
 });
@@ -154,6 +167,32 @@ router.delete('/expediente', utils.requireAuthorization, function(req, res, next
 		if(err) return res.json(err);
 		res.json(data);
 	});
+});
+
+router.get('/expediente/:id/edit', utils.requireAuthorization, function(req, res, next) {
+	var db = req.app.get('db');
+	db.ma_endodoncia.findOne({ id: req.params.id }, function(err, expediente){
+		if(err) return res.json(err);
+		db.ca_pacientes.findOne({ id: expediente.id_paciente }, function(err, paciente){
+			if(err) return res.json(err);
+			db.ca_colegas.findOne({ id: expediente.id_colega }, function(err, colega){
+				if(err) return res.json(err);
+				expediente.fecha_expediente = (expediente.fecha_expediente) ? moment(expediente.fecha_expediente).format('DD/MM/YYYY').toString() : '';
+				expediente.ids_alergias = expediente.ids_alergias || [];
+				res.render('expedientes/endodoncia_editar', { title: 'Editar', user: req.session.user, expediente: expediente, paciente: paciente, colega: colega });
+			});
+		});
+	});
+
+	function toArray(variable){
+		if(variable.constructor === Array){
+			return variable;
+		}
+		else{
+			var myArray = [variable];
+			return myArray;
+		}
+	}
 });
 
 module.exports = router;
