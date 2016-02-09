@@ -154,10 +154,11 @@ router.get('/expedientes', utils.requireAuthorization, function(req, res, next) 
 	var db = req.app.get('db');
 	db.vw_endodoncia.find({}, function(err, data){
 		if(err) return res.send(err);
-		/*expedientes = data.forEach(function(expediente){
+		expedientes = data.map(function(expediente){
 			expediente.fecha_expediente = (expediente.fecha_expediente) ? moment(expediente.fecha_expediente).format('DD/MM/YYYY').toString() : '';
-		});*/
-		res.render('expedientes/lista', { user: req.session.user, expedientes: data });
+			return expediente;
+		});
+		res.render('expedientes/lista', { user: req.session.user, expedientes: expedientes });
 	});
 });
 

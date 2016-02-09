@@ -11,7 +11,7 @@
 			<th>ID</th>
 			<th>Fecha</th>
 			<th>Paciente</th>
-			<th>Recomendado por</th>
+			<th>Dientes</th>
 			<th>Notas</th>
 			<th>Acciones</th>
 		</tr>
@@ -22,7 +22,7 @@
 				<td><%= expediente.id %></td>
 				<td><%= expediente.fecha_expediente %></td>
 				<td><%= expediente.nombre_completo %></td>
-				<td><%= expediente.id_colega %></td>
+				<td><%= expediente.piezas_dentales %></td>
 				<td><%= expediente.nota_evolucion %></td>
 				<td>
 					<a href="/expediente/<%= expediente.id %>/edit">Editar</a>
