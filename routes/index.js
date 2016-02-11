@@ -202,4 +202,17 @@ router.get('/expediente/:id/edit', utils.requireAuthorization, function(req, res
 	}
 });
 
+router.post('/expediente/:id/clone', utils.requireAuthorization, function(req, res, next) {
+	var db = req.app.get('db');
+	db.ma_endodoncia.findOne({ id: req.params.id }, function(err, original){
+		delete original.id;
+		original.nota_evolucion = req.body.nota_clon;
+		original.fecha_expediente = moment(req.body.fecha_clon, 'DD/MM/YYYY').format('YYYY-MM-DD');
+		db.ma_endodoncia.insert(original, function(err, clon){
+			if(err) return res.json(err);
+			res.json(clon);
+		});
+	});
+});
+
 module.exports = router;

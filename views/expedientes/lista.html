@@ -13,7 +13,7 @@
 			<th>Paciente</th>
 			<th>Dientes</th>
 			<th>Notas</th>
-			<th>Acciones</th>
+			<th class="text-center">Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,9 +24,10 @@
 				<td><%= expediente.nombre_completo %></td>
 				<td><%= expediente.piezas_dentales %></td>
 				<td><%= expediente.nota_evolucion %></td>
-				<td>
+				<td class="text-center">
 					<a href="/expediente/<%= expediente.id %>/edit">Editar</a>
 					<a href="#" data-id="<%= expediente.id %>" class="js_eliminar">Eliminar</a>
+					<a href="#" data-id="<%= expediente.id %>" class="js_clonar">Clonar</a>
 				</td>
 			</tr>
 		{% endfor %}
@@ -39,7 +40,7 @@
 	<script type="text/javascript">
 		$(document).on("ready", function(){
 			$('#tabla-expedientes').DataTable();
-			$(".table").on("click", ".js_eliminar", function(e){
+			$(".table").on("click", ".js_eliminar", function(e) {
 				e.preventDefault();
 				var id_expediente = $(this).data('id');
 				bootbox.dialog({
@@ -73,7 +74,48 @@
 						}
 					}
 				});
-			})
+			});
+
+			$(".table").on("click", ".js_clonar", function(e) {
+				e.preventDefault();
+				var id_expediente = $(this).data('id');
+				bootbox.dialog({
+					title: "¿Con que fecha y nota deseas clonar el expediente?",
+					message: "Fecha: <input type='text' class='form-control' id='fecha_clon'> <br>Nota <textarea class='form-control' id='nota_clon'></textarea>",
+					buttons: {
+						danger: {
+							label: "Clonar",
+							className: "btn-primary",
+							callback: function() {
+								$.ajax({
+									url: "/expediente/"+id_expediente+"/clone",
+									data: { 
+										id: id_expediente, 
+										fecha_clon: $("#fecha_clon").val(), 
+										nota_clon: $("#nota_clon").val() 
+									},
+									type: "POST",
+									success: function(data) {
+										if(data.id){
+											bootbox.alert("Su expediente se ha clonado con el ID: <b>"+data.id+"</b>");
+											//location.reload();
+										}
+										else{
+											bootbox.alert("Ha ocurrido un error al intentar clonar");
+										}
+									}
+								});
+							}
+						},
+						success: {
+							label: "Cancelar",
+							className: "btn-default",
+							callback: function() {
+							}
+						}
+					}
+				});
+			});
 		});
 	</script>
 {% endblock %}
