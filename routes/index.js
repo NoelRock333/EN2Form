@@ -161,7 +161,7 @@ router.get('/expedientes', utils.requireAuthorization, function(req, res, next) 
 	db.vw_endodoncia.find({}, function(err, data){
 		if(err) return res.send(err);
 		expedientes = data.map(function(expediente){
-			expediente.fecha_expediente = (expediente.fecha_expediente) ? moment(expediente.fecha_expediente).format('DD/MM/YYYY').toString() : '';
+			expediente.fecha_expediente = moment(expediente.fecha_expediente).add('days',1).format('DD/MM/YYYY').toString();
 			return expediente;
 		});
 		res.render('expedientes/lista', { user: req.session.user, expedientes: expedientes });
@@ -184,7 +184,7 @@ router.get('/expediente/:id/edit', utils.requireAuthorization, function(req, res
 			if(err) return res.json(err);
 			db.ca_colegas.findOne({ id: expediente.id_colega }, function(err, colega){
 				if(err) return res.json(err);
-				expediente.fecha_expediente = (expediente.fecha_expediente) ? moment(expediente.fecha_expediente).format('DD/MM/YYYY').toString() : '';
+				expediente.fecha_expediente = moment(expediente.fecha_expediente).add('days',1).format('DD/MM/YYYY').toString();
 				expediente.ids_alergias = expediente.ids_alergias || [];
 				res.render('expedientes/endodoncia_editar', { title: 'Editar', user: req.session.user, expediente: expediente, paciente: paciente, colega: colega });
 			});
