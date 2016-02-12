@@ -14,6 +14,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var pacientes = require('./routes/pacientes');
 var colegas = require('./routes/colegas');
+var reportes = require('./routes/reportes');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/', pacientes);
 app.use('/', colegas);
+app.use('/', reportes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

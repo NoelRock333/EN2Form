@@ -1,0 +1,36 @@
+{% extends '../layout.html' %}
+
+{% block styles %}
+	<link rel="stylesheet" href="/stylesheets/jquery.dataTables.css">
+{% endblock %}
+
+{% block content %}
+<select name="" id="id_usuario">
+	<option value=""></option>
+	{% for usuario in usuarios %}
+		<option value="<%=usuario.id%>"><%=usuario.email%></option>
+	{% endfor %}
+</select>
+<label>Estadisticas</label>
+<span id="count"></span>
+
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="/javascripts/jquery.dataTables.js"></script>
+	<script type="text/javascript">
+		$(document).on("ready", function(){
+			$('#tabla-pacientes').DataTable();
+			$("#id_usuario").on("change", function(){
+				$.ajax({
+					url: "/reportes/"+$("#id_usuario").val()+"/count",
+					type: "GET",
+					dataType: "JSON",
+					success: function(data) {
+						$("#count").text(data.count);
+					}
+				})
+			})
+		});
+	</script>
+{% endblock %}
