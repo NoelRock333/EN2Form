@@ -158,7 +158,7 @@ router.post('/nuevo_colega', utils.requireAuthorization, function(req, res, next
 
 router.get('/expedientes', utils.requireAuthorization, function(req, res, next) {
 	var db = req.app.get('db');
-	db.vw_endodoncia.find({}, function(err, data){
+	db.run("select * from vw_endodoncia", function(err, data){
 		if(err) return res.send(err);
 		expedientes = data.map(function(expediente){
 			expediente.fecha_expediente = moment(expediente.fecha_expediente).add('days',1).format('DD/MM/YYYY').toString();
